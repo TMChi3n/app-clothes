@@ -1,17 +1,23 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { UserModule } from './user/user.module';
-import { BillModule } from './bill/bill.module';
-import { OrderModule } from './bill/order/order.module';
-import { CartModule } from './cart/cart.module';
-import { ProductModule } from './product/product.module';
-import { UserModule } from './user/user.module';
+import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from './user/entities/user.entity';
 
 @Module({
-  imports: [AuthModule, UserModule, ProductModule, CartModule, OrderModule, BillModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: process.env.DB_HOST,
+      port: parseInt(process.env.DB_PORT, 10),
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      entities: [User],
+      synchronize: true,
+    }),
+    AuthModule, // a module
+  ],
 })
 export class AppModule {}
