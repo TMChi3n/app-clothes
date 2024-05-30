@@ -1,18 +1,25 @@
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
+@Entity()
 export class Product {
   @PrimaryGeneratedColumn()
   id_product: number;
-  @Column()
+
+  @Column({ length: 100 })
   name: string;
-  @Column()
+
+  @Column('text')
   descriptions: string;
-  @Column()
+
+  @Column('decimal', { precision: 20, scale: 2 })
   price: number;
-  @Column()
-  img_url: string;
-  @Column()
+
+  @Column('longblob')
+  img_url: Buffer;
+
+  @Column('int')
   stock_quantity: number;
-  @Column()
+
+  @Column({ type: 'nvarchar', length: 255 })
   brand: string;
 }

@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Product } from './modules/product/entities/product.entity';
+import { ProductModule } from './modules/product/product.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { Product } from './modules/product/entities/product.entity';
       synchronize: true,
       entities: [Product],
     }),
+    ProductModule,
   ],
 })
 export class AppModule {}
