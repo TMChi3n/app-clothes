@@ -2,7 +2,7 @@ import { Column, PrimaryGeneratedColumn } from 'typeorm';
 
 export class Product {
   @PrimaryGeneratedColumn()
-  id_product: string;
+  id_product: number;
   @Column()
   name: string;
   @Column()
