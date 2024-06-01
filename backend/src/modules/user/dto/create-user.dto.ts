@@ -1,16 +1,16 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsString, IsEmail, MinLength } from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
-  name: string;
+  username: string;
+
+  @IsEmail()
+  email: string;
+
   @IsString()
-  descriptions: string;
-  @IsNumber()
-  price: number;
+  @MinLength(8)
+  password: string;
+
   @IsString()
-  img_url: string;
-  @IsNumber()
-  stock_quantity: number;
-  @IsString()
-  brand: string;
+  role: string;
 }
