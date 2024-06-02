@@ -23,6 +23,7 @@ export class AuthController {
         email: user.email,
         password: user.password,
         role: user.role,
+        avatar: user.avatar,
       },
     };
   }

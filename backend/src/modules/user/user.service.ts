@@ -12,6 +12,7 @@ export class UserService {
     username: string,
     email: string,
     password: string,
+    avatar: string,
     role: string = 'USER',
   ): Promise<User> {
     const hashPassword = await bcrypt.hash(password, 10);
@@ -20,6 +21,7 @@ export class UserService {
       email,
       password: hashPassword,
       role,
+      avatar,
     });
     return this.userRepo.save(newUser);
   }

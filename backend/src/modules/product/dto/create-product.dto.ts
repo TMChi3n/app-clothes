@@ -16,10 +16,7 @@ export class CreateProductDto {
   @IsNotEmpty()
   img_url: string;
 
-  @IsNumber()
-  stock_quantity: number;
-
   @IsString()
   @IsNotEmpty()
-  brand: string;
+  type: string;
 }

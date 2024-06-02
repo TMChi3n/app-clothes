@@ -12,4 +12,6 @@ export class User {
   email: string;
   @Column({ default: 'USER' })
   role: string;
+  @Column()
+  avatar: string;
 }

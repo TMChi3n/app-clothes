@@ -17,9 +17,6 @@ export class Product {
   @Column('longblob')
   img_url: Buffer;
 
-  @Column('int')
-  stock_quantity: number;
-
   @Column({ type: 'nvarchar', length: 255 })
-  brand: string;
+  type: string;
 }

@@ -17,12 +17,13 @@ export class AuthService {
   ) {}
 
   async register(createUserDto: CreateUserDto): Promise<User> {
-    const { username, email, password } = createUserDto;
+    const { username, email, password, avatar } = createUserDto;
     const hashPass = await bcrypt.hash(password, 10);
     const user = this.userRepo.create({
       username,
       email,
       password: hashPass,
+      avatar,
     });
     const savedUser = await this.userRepo.save(user);
     // Adding send mail
@@ -38,6 +39,7 @@ export class AuthService {
         username: user.username,
         email: user.email,
         role: user.role,
+        avatar: user.avatar,
       };
     }
     return null;
