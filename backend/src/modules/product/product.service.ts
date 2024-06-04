@@ -28,4 +28,22 @@ export class ProductService {
 
   return await this.productRepo.save(product);
 }
+
+async updateProduct(id_product: number, createProductDto: CreateProductDto): Promise<Product> {
+  const product = await this.findProductById(id_product);
+  const { name, descriptions, price, img_url, type } = createProductDto;
+  product.name = name;
+  product.descriptions = descriptions;
+  product.price = price;
+  product.img_url = Buffer.from(img_url, 'base64');
+  product.type = type;
+
+  return await this.productRepo.save(product);
+}
+
+async deleteProduct(id_product: number): Promise<void> {
+  const product = await this.findProductById(id_product);
+  await this.productRepo.remove(product);
+}
+
 }
