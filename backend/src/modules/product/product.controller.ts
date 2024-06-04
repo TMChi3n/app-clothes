@@ -1,6 +1,7 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Product } from './entities/product.entity';
+import { CreateProductDto } from './dto/create-product.dto';
 
 @Controller('api/v1/product')
 export class ProductController {
@@ -15,4 +16,10 @@ export class ProductController {
   getAllProducts(): Promise<Product[]> {
     return this.productService.findAllProduct();
   }
+
+  @Post('/create')
+  createProduct(@Body() createProductDto: CreateProductDto): Promise<Product> {
+    return this.productService.addProduct(createProductDto);
+  }
 }
+
