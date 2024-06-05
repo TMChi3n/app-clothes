@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Product } from './entities/product.entity';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -30,6 +30,26 @@ export class ProductController {
   @Delete('/delete/:id')
   deleteProduct(@Param('id') id_product: number): Promise<void> {
     return this.productService.deleteProduct(id_product);
+  }
+
+  @Get('/filter')
+  filterProducts(
+    @Query('priceMin') priceMin: number,
+    @Query('priceMax') priceMax: number,
+    @Query('type') type: string,
+  ): Promise<Product[]> {
+    return this.productService.filterProducts([], priceMin, priceMax, type);
+  }
+
+  @Get('/search')
+  async searchProductsByName(
+    @Query('keyword') keyword: string,
+    @Query('priceMin') priceMin: number,
+    @Query('priceMax') priceMax: number,
+    @Query('type') type: string,
+  ): Promise<Product[]> {
+    const products = await this.productService.searchProductsByName(keyword);
+    return this.productService.filterProducts(products, priceMin, priceMax, type);
   }
 }
 

@@ -46,4 +46,24 @@ async deleteProduct(id_product: number): Promise<void> {
   await this.productRepo.remove(product);
 }
 
+async filterProducts(products: Product[], priceMin?: number, priceMax?: number, type?: string): Promise<Product[]> {
+  let filteredProducts = products;
+
+  if (priceMin !== undefined && priceMax !== undefined) {
+    filteredProducts = filteredProducts.filter(product => product.price >= priceMin && product.price <= priceMax);
+  }
+
+  if (type) {
+    filteredProducts = filteredProducts.filter(product => product.type === type);
+  }
+
+  return filteredProducts;
+}
+
+async searchProductsByName(keyword: string): Promise<Product[]> {
+  return await this.productRepo
+    .createQueryBuilder('product')
+    .where('LOWER(product.name) LIKE LOWER(:keyword)', { keyword: `%${keyword}%` })
+    .getMany();
+}
 }
