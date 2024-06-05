@@ -37,8 +37,9 @@ export class ProductController {
     @Query('priceMin') priceMin: number,
     @Query('priceMax') priceMax: number,
     @Query('type') type: string,
+    @Query('person') person: string,
   ): Promise<Product[]> {
-    return this.productService.filterProducts([], priceMin, priceMax, type);
+    return this.productService.filterProducts([], priceMin, priceMax, type, person);
   }
 
   @Get('/search')
@@ -47,9 +48,10 @@ export class ProductController {
     @Query('priceMin') priceMin: number,
     @Query('priceMax') priceMax: number,
     @Query('type') type: string,
+    @Query('person') person: string,
   ): Promise<Product[]> {
     const products = await this.productService.searchProductsByName(keyword);
-    return this.productService.filterProducts(products, priceMin, priceMax, type);
+    return this.productService.filterProducts(products, priceMin, priceMax, type, person);
   }
 }
 

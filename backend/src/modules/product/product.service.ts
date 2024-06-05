@@ -18,10 +18,12 @@ export class ProductService {
   }
 
  async addProduct(createProductDto: CreateProductDto): Promise<Product> {
-  const { name, descriptions, price, img_url, type } = createProductDto;
+  const { name, person, material, overview, price, img_url, type } = createProductDto;
   const product = new Product();
   product.name = name;
-  product.descriptions = descriptions;
+  product.person = person;
+  product.material = material;
+  product.overview = overview;
   product.price = price;
   product.img_url = Buffer.from(img_url, 'base64'); 
   product.type = type;
@@ -31,9 +33,11 @@ export class ProductService {
 
 async updateProduct(id_product: number, createProductDto: CreateProductDto): Promise<Product> {
   const product = await this.findProductById(id_product);
-  const { name, descriptions, price, img_url, type } = createProductDto;
+  const { name, person, material, overview, price, img_url, type } = createProductDto;
   product.name = name;
-  product.descriptions = descriptions;
+  product.person = person;
+  product.material = material;
+  product.overview = overview;
   product.price = price;
   product.img_url = Buffer.from(img_url, 'base64');
   product.type = type;
@@ -46,7 +50,7 @@ async deleteProduct(id_product: number): Promise<void> {
   await this.productRepo.remove(product);
 }
 
-async filterProducts(products: Product[], priceMin?: number, priceMax?: number, type?: string): Promise<Product[]> {
+async filterProducts(products: Product[], priceMin?: number, priceMax?: number, type?: string, person?:string): Promise<Product[]> {
   let filteredProducts = products;
 
   if (priceMin !== undefined && priceMax !== undefined) {
@@ -55,6 +59,10 @@ async filterProducts(products: Product[], priceMin?: number, priceMax?: number, 
 
   if (type) {
     filteredProducts = filteredProducts.filter(product => product.type === type);
+  }
+
+  if (person) {
+    filteredProducts = filteredProducts.filter(product => product.person === person);
   }
 
   return filteredProducts;
