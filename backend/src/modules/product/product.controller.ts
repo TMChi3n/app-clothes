@@ -8,7 +8,7 @@ export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Get('/get/:id')
-  getProductById(id_product: number): Promise<Product> {
+  getProductById(@Param('id') id_product: number): Promise<Product> {
     return this.productService.findProductById(id_product);
   }
 
