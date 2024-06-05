@@ -7,7 +7,11 @@ export class CreateProductDto {
 
   @IsString()
   @IsNotEmpty()
-  descriptions: string;
+  material: string;
+
+  @IsString()
+  @IsNotEmpty()
+  overview: string;
 
   @IsNumber()
   price: number;
@@ -19,4 +23,8 @@ export class CreateProductDto {
   @IsString()
   @IsNotEmpty()
   type: string;
+
+  @IsString()
+  @IsNotEmpty()
+  person: string;
 }

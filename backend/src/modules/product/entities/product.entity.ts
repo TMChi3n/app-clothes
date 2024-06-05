@@ -9,7 +9,10 @@ export class Product {
   name: string;
 
   @Column('text')
-  descriptions: string;
+  material: string;
+
+  @Column('text')
+  overview: string;
 
   @Column('decimal', { precision: 20, scale: 2 })
   price: number;
@@ -17,6 +20,9 @@ export class Product {
   @Column('longblob')
   img_url: Buffer;
 
-  @Column({ type: 'nvarchar', length: 255 })
+  @Column({ type: 'varchar', length: 255 })
   type: string;
+
+  @Column('text')
+  person: string;
 }
