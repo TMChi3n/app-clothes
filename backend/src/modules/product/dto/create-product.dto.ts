@@ -6,8 +6,16 @@ export class CreateProductDto {
   name: string;
 
   @IsString()
-  @IsNotEmpty()
-  descriptions: string;
+  @IsOptional()
+  person?: string;
+
+  @IsString()
+  @IsOptional()
+  material?: string;
+
+  @IsString()
+  @IsOptional()
+  overview?: string;
 
   @IsNumber()
   @IsNotEmpty()
@@ -20,8 +28,4 @@ export class CreateProductDto {
   @IsString()
   @IsNotEmpty()
   type: string;
-
-  @IsString()
-  @IsNotEmpty()
-  person: string;
 }

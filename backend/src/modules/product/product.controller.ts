@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Product } from './entities/product.entity';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -23,7 +32,10 @@ export class ProductController {
   }
 
   @Put('/update/:id')
-  updateProduct(@Param('id') id_product: number, @Body() createProductDto: CreateProductDto): Promise<Product> {
+  updateProduct(
+    @Param('id') id_product: number,
+    @Body() createProductDto: CreateProductDto,
+  ): Promise<Product> {
     return this.productService.updateProduct(id_product, createProductDto);
   }
 
@@ -39,7 +51,13 @@ export class ProductController {
     @Query('type') type: string,
     @Query('person') person: string,
   ): Promise<Product[]> {
-    return this.productService.filterProducts([], priceMin, priceMax, type, person);
+    return this.productService.filterProducts(
+      [],
+      priceMin,
+      priceMax,
+      type,
+      person,
+    );
   }
 
   @Get('/search')
@@ -51,7 +69,12 @@ export class ProductController {
     @Query('person') person: string,
   ): Promise<Product[]> {
     const products = await this.productService.searchProductsByName(keyword);
-    return this.productService.filterProducts(products, priceMin, priceMax, type, person);
+    return this.productService.filterProducts(
+      products,
+      priceMin,
+      priceMax,
+      type,
+      person,
+    );
   }
 }
-
