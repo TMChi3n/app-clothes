@@ -1,6 +1,16 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Product } from './entities/product.entity';
+import { CreateProductDto } from './dto/create-product.dto';
 
 @Controller('api/v1/product')
 export class ProductController {
@@ -14,5 +24,57 @@ export class ProductController {
   @Get('/get')
   getAllProducts(): Promise<Product[]> {
     return this.productService.findAllProduct();
+  }
+
+  @Post('/create')
+  createProduct(@Body() createProductDto: CreateProductDto): Promise<Product> {
+    return this.productService.addProduct(createProductDto);
+  }
+
+  @Put('/update/:id')
+  updateProduct(
+    @Param('id') id_product: number,
+    @Body() createProductDto: CreateProductDto,
+  ): Promise<Product> {
+    return this.productService.updateProduct(id_product, createProductDto);
+  }
+
+  @Delete('/delete/:id')
+  deleteProduct(@Param('id') id_product: number): Promise<void> {
+    return this.productService.deleteProduct(id_product);
+  }
+
+  @Get('/filter')
+  filterProducts(
+    @Query('priceMin') priceMin: number,
+    @Query('priceMax') priceMax: number,
+    @Query('type') type: string,
+    @Query('person') person: string,
+  ): Promise<Product[]> {
+    return this.productService.filterProducts(
+      [],
+      priceMin,
+      priceMax,
+      type,
+      person,
+    );
+  }
+
+  @Get('/search')
+  async searchProductsByName(
+    @Query('keyword') keyword: string,
+    @Query('priceMin') priceMin: number,
+    @Query('priceMax') priceMax: number,
+    @Query('type') type: string,
+    @Query('person') person: string,
+  ): Promise<Product[]> {
+    const products = await this.productService.searchProductsByName(keyword);
+    return this.productService.filterProducts(
+      products,
+      priceMin,
+      priceMax,
+      type,
+      person,
+    );
   }
 }
