@@ -23,7 +23,7 @@ export class CreateProductDto {
 
   @IsString()
   @IsNotEmpty()
-  img_url: string;
+  img_url: Buffer;
 
   @IsString()
   @IsNotEmpty()
