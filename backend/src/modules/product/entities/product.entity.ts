@@ -1,27 +1,24 @@
 import { CartItem } from 'src/modules/cart/cart-item/entities/cart-item.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'product' }) // Sử dụng tên bảng 'product'
 export class Product {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: 'id_product' }) // Sử dụng tên cột 'id_product'
   id_product: number;
 
   @Column({ length: 100 })
   name: string;
 
   @Column('text')
-  material: string;
+  descriptions: string;
 
-  @Column('text')
-  overview: string;
-
-  @Column('decimal', { precision: 20, scale: 2 })
+  @Column({ type: 'decimal', precision: 20, scale: 2 })
   price: number;
 
-  @Column('longblob')
+  @Column({ type: 'longblob' }) // Sử dụng type 'longblob'
   img_url: Buffer;
 
-  @Column({ type: 'nvarchar', length: 255 })
+  @Column({ length: 255 }) // Sử dụng length cho cột type 'nvarchar'
   type: string;
 
   @Column('text')
