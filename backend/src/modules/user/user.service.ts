@@ -22,7 +22,7 @@ export class UserService {
       password: hashPassword,
       role,
       avatar,
-    });
+    } as Partial<User>);
     return this.userRepo.save(newUser);
   }
 
