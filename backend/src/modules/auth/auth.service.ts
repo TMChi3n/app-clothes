@@ -132,7 +132,13 @@ export class AuthService {
         'Password reset token is invalid or expired. Please try again',
       );
     }
-    user.password = await bcrypt.hash(resetPassword.password, 10);
+
+    // checking same password
+    if (resetPassword.newPassword !== resetPassword.confirmPassword) {
+      throw new BadRequestException('Password do not match');
+    }
+
+    user.password = await bcrypt.hash(resetPassword.newPassword, 10);
     user.resetPasswordExpires = null;
     user.resetPasswordToken = null;
     await this.userService.save(user);
