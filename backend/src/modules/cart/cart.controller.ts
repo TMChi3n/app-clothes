@@ -48,4 +48,10 @@ export class CartController {
     const updatedCartItem = await this.cartService.decreaseQuantity(+id);
     return { cartItem: updatedCartItem };
   }
+
+  @Delete('clear')
+  async clearCart(@Request() req) {
+    await this.cartService.clearCart(req.user.userId);
+    return { message: 'Cart cleared successfully' };
+  }
 }

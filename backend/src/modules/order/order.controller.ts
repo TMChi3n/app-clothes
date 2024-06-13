@@ -1,34 +1,37 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Get, Param, Patch, Request, Delete } from '@nestjs/common';
 import { OrderService } from './order.service';
-import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
-@Controller('order')
+@Controller('api/v1/order')
+@UseGuards(JwtAuthGuard)
 export class OrderController {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(private orderService: OrderService) {}
 
-  @Post()
-  create(@Body() createOrderDto: CreateOrderDto) {
-    return this.orderService.create(createOrderDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.orderService.findAll();
+  @Post('create')
+  async createOrder(@Body() body) {
+    const { userId, address, phoneNumber } = body;
+    console.log('Creating order for user:', userId);
+    return this.orderService.createOrderFromCart(userId, address, phoneNumber);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.orderService.findOne(+id);
+  async getOrder(@Param('id') id: number) {
+    return this.orderService.getOrder(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
-    return this.orderService.update(+id, updateOrderDto);
+  @Get('user/:userId')
+  async getOrdersByUser(@Param('userId') userId: number) {
+    return this.orderService.getOrdersByUser(userId);
+  }
+
+  @Patch(':id/status')
+  async updateOrderStatus(@Param('id') id: number, @Body('status') status: string) {
+    return this.orderService.updateOrderStatus(id, status);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.orderService.remove(+id);
+  async deleteOrder(@Param('id') id:number){
+    return this.orderService.deleteOrder(id);
   }
 }
+ 

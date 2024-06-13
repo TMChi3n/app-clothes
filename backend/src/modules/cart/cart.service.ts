@@ -70,4 +70,11 @@ export class CartService {
     }
     throw new Error('Cart item not found');
   }
+
+  async clearCart(userId: number) {
+    const cart = await this.getCart(userId);
+    if (cart) {
+      await this.cartItemRepo.delete({ id_cart: cart.id_cart });
+    }
+  }
 }
