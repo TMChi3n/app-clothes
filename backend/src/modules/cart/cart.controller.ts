@@ -30,8 +30,9 @@ export class CartController {
 
   @UseGuards(JwtAuthGuard)
   @Delete('remove/:id')
-  removeFromCart(@Param('id') id: string) {
-    return this.cartService.removeFromCart(+id);
+  async removeFromCart(@Param('id') id: string) {
+    await this.cartService.removeFromCart(+id);
+    return 'Remove successfully';
   }
 
   @UseGuards(JwtAuthGuard)
