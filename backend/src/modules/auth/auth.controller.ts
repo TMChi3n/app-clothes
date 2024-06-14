@@ -6,6 +6,7 @@ import {
   UseGuards,
   Param,
   Patch,
+  Query,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from 'src/common/guards/local-auth.guard';
@@ -43,7 +44,11 @@ export class AuthController {
   }
 
   @Post('reset-password')
-  async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
+  async resetPassword(
+    @Query('token') token: string,
+    @Body() resetPasswordDto: ResetPasswordDto,
+  ) {
+    resetPasswordDto.token = token;
     return this.authService.resetPassword(resetPasswordDto);
   }
 

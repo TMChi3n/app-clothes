@@ -94,11 +94,11 @@ export class AuthService {
 
     const token = crypto.randomBytes(20).toString('hex');
     user.resetPasswordToken = token;
-    user.resetPasswordExpires = new Date(Date.now() + 3600000);
+    user.resetPasswordExpires = new Date(Date.now() + 3600000); // 1 hour
 
     await this.userService.save(user);
 
-    const resetUrl = `http://yourapp.com/reset-password?token=${token}`;
+    const resetUrl = `http://localhost:8080/api/v1/auth/reset-password?token=${token}`;
 
     const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -123,22 +123,25 @@ export class AuthService {
     return { message: 'Password reset email sent' };
   }
 
-  async resetPassword(resetPassword: ResetPasswordDto) {
-    const user = await this.userService.findByResetPasswordToken(
-      resetPassword.token,
-    );
-    if (!user || user.resetPasswordExpires < new Date()) {
+  async resetPassword(resetPasswordDto: ResetPasswordDto) {
+    const { email, token, newPassword, confirmPassword } = resetPasswordDto;
+
+    const user = await this.userService.findByEmail(email);
+    if (
+      !user ||
+      user.resetPasswordToken !== token ||
+      user.resetPasswordExpires < new Date()
+    ) {
       throw new BadRequestException(
         'Password reset token is invalid or expired. Please try again',
       );
     }
 
-    // checking same password
-    if (resetPassword.newPassword !== resetPassword.confirmPassword) {
-      throw new BadRequestException('Password do not match');
+    if (newPassword !== confirmPassword) {
+      throw new BadRequestException('Passwords do not match');
     }
 
-    user.password = await bcrypt.hash(resetPassword.newPassword, 10);
+    user.password = await bcrypt.hash(newPassword, 10);
     user.resetPasswordExpires = null;
     user.resetPasswordToken = null;
     await this.userService.save(user);
