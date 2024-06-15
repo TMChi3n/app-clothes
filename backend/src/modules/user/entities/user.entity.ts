@@ -36,9 +36,6 @@ export class User {
   @Column({ nullable: true, type: 'date' })
   birthday: Date;
 
-  @Column({ nullable: true })
-  phone_number: number;
-
   @OneToMany(() => Cart, (cart) => cart.user)
   carts: Cart[];
 
