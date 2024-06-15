@@ -33,5 +33,10 @@ export class OrderController {
   async deleteOrder(@Param('id') id:number){
     return this.orderService.deleteOrder(id);
   }
+
+  @Get(':id/totalAmount')
+  async getOrderTotalAmount(@Param('id') id: number): Promise<number> {
+    return this.orderService.calculateTotalAmount(id);
+  }
 }
  

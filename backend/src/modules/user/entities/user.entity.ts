@@ -4,7 +4,6 @@ import { Order } from 'src/modules/order/entities/order.entity';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  
   id_user: number;
 
   @Column()
@@ -21,6 +20,21 @@ export class User {
 
   @Column('longblob', { nullable: true })
   avatar: string;
+
+  @Column({ nullable: true })
+  resetPasswordToken: string;
+
+  @Column({ nullable: true })
+  resetPasswordExpires: Date;
+
+  @Column({ nullable: true })
+  address: string;
+
+  @Column({ nullable: true, default: 'empty' })
+  gender: string;
+
+  @Column({ nullable: true, type: 'date' })
+  birthday: Date;
 
   @OneToMany(() => Cart, (cart) => cart.user)
   carts: Cart[];

@@ -33,4 +33,14 @@ export class UserService {
   async findById(id_user: number): Promise<User> {
     return this.userRepo.findOne({ where: { id_user } });
   }
+
+  async findByResetPasswordToken(token: string): Promise<User | undefined> {
+    return this.userRepo.findOne({
+      where: { resetPasswordToken: token },
+    });
+  }
+
+  async save(user: User): Promise<User> {
+    return this.userRepo.save(user);
+  }
 }
