@@ -19,7 +19,7 @@ export class Product {
   price: number;
 
   @Column('longblob')
-  img_url: Buffer;
+  img_url: string;
 
   @Column({ type: 'nvarchar', length: 255 })
   type: string;
