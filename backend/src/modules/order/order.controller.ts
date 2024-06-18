@@ -1,4 +1,14 @@
-import { Controller, Post, Body, UseGuards, Get, Param, Patch, Request, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UseGuards,
+  Get,
+  Param,
+  Patch,
+  Request,
+  Delete,
+} from '@nestjs/common';
 import { OrderService } from './order.service';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
@@ -25,13 +35,15 @@ export class OrderController {
   }
 
   @Patch(':id/status')
-  async updateOrderStatus(@Param('id') id: number, @Body('status') status: string) {
+  async updateOrderStatus(
+    @Param('id') id: number,
+    @Body('status') status: string,
+  ) {
     return this.orderService.updateOrderStatus(id, status);
   }
 
   @Delete(':id')
-  async deleteOrder(@Param('id') id:number){
+  async deleteOrder(@Param('id') id: number) {
     return this.orderService.deleteOrder(id);
   }
 }
- 
