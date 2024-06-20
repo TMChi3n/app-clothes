@@ -1,6 +1,7 @@
 import { Cart } from 'src/modules/cart/entities/cart.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Order } from 'src/modules/order/entities/order.entity';
+
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
@@ -30,11 +31,14 @@ export class User {
   @Column({ nullable: true })
   address: string;
 
-  @Column({ nullable: true, default: 'empty' })
-  gender: string;
+  @Column({ type: 'enum', enum: ['male', 'female'], nullable: true })
+  gender: 'male' | 'female';
 
   @Column({ nullable: true, type: 'date' })
   birthday: Date;
+
+  @Column({ nullable: true })
+  phone_number?: number;
 
   @OneToMany(() => Cart, (cart) => cart.user)
   carts: Cart[];

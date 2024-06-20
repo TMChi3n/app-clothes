@@ -26,7 +26,7 @@ export class ProductService {
     product.material = material;
     product.overview = overview;
     product.price = price;
-    product.img_url = Buffer.from(img_url, 'base64');
+    product.img_url = img_url;
     product.type = type;
 
     return await this.productRepo.save(product);
@@ -44,7 +44,7 @@ export class ProductService {
     product.material = material;
     product.overview = overview;
     product.price = price;
-    product.img_url = Buffer.from(img_url, 'base64');
+    product.img_url = img_url;
     product.type = type;
 
     return await this.productRepo.save(product);

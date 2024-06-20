@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { CannotCreateEntityIdMapError, Repository } from 'typeorm';
 import { Order } from './entities/order.entity';
 import { OrderItem } from './order-item/entities/order-item.entity';
 import { CartService } from '../cart/cart.service';
@@ -8,6 +8,8 @@ import { Cart } from '../cart/entities/cart.entity';
 import { CartItem } from '../cart/cart-item/entities/cart-item.entity';
 import { ProductService } from '../product/product.service';
 import { Payment } from '../payment/etities/payment.entity';
+import { User } from '../user/entities/user.entity';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class OrderService {
@@ -17,9 +19,10 @@ export class OrderService {
     @InjectRepository(Payment) private paymentRepo: Repository<Payment>,
     private productService: ProductService,
     private cartService: CartService,
+    private userService: UserService,
   ) {}
 
-  async createOrderFromCart(userId: number, address: string, phoneNumber: string) {
+  async createOrderFromCart(userId: number) {
     // Lấy giỏ hàng từ dịch vụ giỏ hàng
     const cart: Cart = await this.cartService.getCart(userId);
     console.log('Cart retrieved:', cart);
@@ -29,14 +32,22 @@ export class OrderService {
       throw new Error('Cart is empty');
     }
 
+    // Lấy dữ liệu từ user
+    const user: User = await this.userService.findById(userId);
+
+    // Kiểm tra nếu dữ liệu trống
+    if (!user || !user.address || !user.phone_number) {
+      throw new Error('User data is incomplete (missing address or phone number)');
+    }
+
     console.log('Creating order with userId:', userId);
     // Tạo đơn hàng mới
     const order: Order = await this.orderRepo.save({
       id_user: userId,
       status: 'pending',
       order_date: new Date(),
-      address,
-      phone_number: phoneNumber,
+      address: user.address,
+      phone_number: user.phone_number,
     });
 
     // Tạo các mục đơn hàng từ các mục trong giỏ hàng

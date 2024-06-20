@@ -6,7 +6,7 @@ export class Product {
   @PrimaryGeneratedColumn()
   id_product: number;
 
-  @Column({ length: 100 })
+  @Column({ type: 'nvarchar', length: 255 })
   name: string;
 
   @Column('text')
@@ -19,12 +19,12 @@ export class Product {
   price: number;
 
   @Column('longblob')
-  img_url: Buffer;
+  img_url: string;
 
   @Column({ type: 'nvarchar', length: 255 })
   type: string;
 
-  @Column('text')
+  @Column({ type: 'nvarchar', length: 255 })
   person: string;
 
   @OneToMany(() => CartItem, (cartItem) => cartItem.product)
@@ -33,4 +33,3 @@ export class Product {
   @OneToMany(() => OrderItem, (orderItem) => orderItem.product)
   orderItems: OrderItem[];
 }
-

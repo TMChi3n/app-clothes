@@ -98,7 +98,7 @@ export class AuthService {
 
     await this.userService.save(user);
 
-    const resetUrl = `http://localhost:8080/api/v1/auth/reset-password?token=${token}`;
+    const resetUrl = `http://localhost:3000?token=${token}`;
 
     const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -174,6 +174,9 @@ export class AuthService {
     }
     if (updateUserDto.address) {
       updateUser.address = updateUserDto.address;
+    }
+    if (updateUserDto.phone_number) {
+      updateUser.phone_number = updateUserDto.phone_number;
     }
 
     await this.userRepo.save(updateUser);

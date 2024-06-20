@@ -19,11 +19,11 @@ export class Order {
   @Column({ nullable: true })
   completed_date: Date;
 
-  @Column() 
+  @Column({nullable: true}) 
   address: string;
 
-  @Column()
-  phone_number: string;
+  @Column({nullable: true})
+  phone_number: number;
 
   @ManyToOne(() => User, (user) => user.orders)
   @JoinColumn({ name: 'id_user' })
