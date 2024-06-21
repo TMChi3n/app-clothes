@@ -15,6 +15,7 @@ import { Payment } from './modules/payment/etities/payment.entity';
 import { OrderModule } from './modules/order/order.module';
 import { Favorite } from './modules/favorite/entities/favorite.entity';
 import { FavoriteModule } from './modules/favorite/favorite.module';
+import { PaymentModule } from './modules/payment/payment.module';
 
 @Module({
   imports: [
@@ -33,7 +34,8 @@ import { FavoriteModule } from './modules/favorite/favorite.module';
     AuthModule,
     CartModule,
     OrderModule,
-    FavoriteModule
+    FavoriteModule,
+    PaymentModule
   ],
 })
 export class AppModule {}

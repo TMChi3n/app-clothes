@@ -22,7 +22,7 @@ export class OrderService {
     private userService: UserService,
   ) {}
 
-  async createOrderFromCart(userId: number) {
+  async createOrderFromCart(userId: number, paymentMethod: 'cash' | 'banking') {
     // Lấy giỏ hàng từ dịch vụ giỏ hàng
     const cart: Cart = await this.cartService.getCart(userId);
     console.log('Cart retrieved:', cart);
@@ -77,8 +77,7 @@ export class OrderService {
      const payment: Payment = await this.paymentRepo.save({
        id_order: order.id_order,
        total_amount: totalAmount,
-       payment_method: 'banking', // Giả sử bạn đang sử dụng phương thức thanh toán là banking
-       payment_date: new Date(),
+       payment_method: paymentMethod, 
      }); 
 
     // Xóa giỏ hàng sau khi đã tạo đơn hàng thành công

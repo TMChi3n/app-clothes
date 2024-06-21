@@ -19,9 +19,9 @@ export class OrderController {
 
   @Post('create')
   async createOrder(@Body() body) {
-    const { userId } = body;
-    console.log('Creating order for user:', userId);
-    return this.orderService.createOrderFromCart(userId);
+    const { userId, paymentMethod } = body;
+    console.log('Creating order for user:', userId, 'with payment method:', paymentMethod);
+    return this.orderService.createOrderFromCart(userId, paymentMethod);
   }
 
   @Get(':id')
