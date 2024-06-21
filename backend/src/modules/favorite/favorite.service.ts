@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Favorite } from './entities/favorite.entity';
@@ -13,6 +13,10 @@ export class FavoriteService {
   ) {}
 
   async addFavorite(user: User, product: Product): Promise<Favorite> {
+    const existingFavorite = await this.favoriteRepository.findOne({ where: { user, product } });
+    if (existingFavorite) {
+      throw new ConflictException('Product already exists in the favorite list');
+    }
     const newFavorite = new Favorite();
     newFavorite.user = user;
     newFavorite.product = product;
