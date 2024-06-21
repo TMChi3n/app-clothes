@@ -21,6 +21,9 @@ export class Payment {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   payment_date: Date;
 
+  @Column()
+  status: string;
+
   @ManyToOne(() => Order, (order) => order.payments)
   @JoinColumn({ name: 'id_order' })
   order: Order;

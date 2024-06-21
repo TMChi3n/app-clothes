@@ -13,6 +13,8 @@ import { Order } from './modules/order/entities/order.entity';
 import { OrderItem } from './modules/order/order-item/entities/order-item.entity';
 import { Payment } from './modules/payment/etities/payment.entity';
 import { OrderModule } from './modules/order/order.module';
+import { Favorite } from './modules/favorite/entities/favorite.entity';
+import { FavoriteModule } from './modules/favorite/favorite.module';
 
 @Module({
   imports: [
@@ -25,12 +27,13 @@ import { OrderModule } from './modules/order/order.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
       synchronize: true,
-      entities: [Product, User, Cart, CartItem, Order, OrderItem, Payment],
+      entities: [Product, User, Cart, CartItem, Order, OrderItem, Payment, Favorite],
     }),
     ProductModule,
     AuthModule,
     CartModule,
     OrderModule,
+    FavoriteModule
   ],
 })
 export class AppModule {}
