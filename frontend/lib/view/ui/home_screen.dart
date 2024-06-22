@@ -98,7 +98,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   controller: _tabController,
                   isScrollable: true,
                   labelColor: Colors.black,
-                  labelStyle: appstyle(24, Colors.black, FontWeight.bold),
+                  labelStyle: appstyle(28, Colors.black, FontWeight.bold),
                   unselectedLabelColor: Colors.black.withOpacity(0.3),
                   tabs: const [
                     Tab(
@@ -118,7 +118,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     MediaQuery.of(context).size.height * 0.21,
               ),
               child: Container(
-                padding: const EdgeInsets.only(left: 12),
+                padding: const EdgeInsets.only(left: 12,top:10),
                 child: TabBarView(
                   controller: _tabController,
                   children: [
