@@ -18,7 +18,7 @@ export class Payment {
   })
   payment_method: string;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', nullable: true })
+  @Column({ type: 'timestamp', nullable: true })
   payment_date: Date;
 
   @Column({
