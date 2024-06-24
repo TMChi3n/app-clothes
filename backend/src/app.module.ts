@@ -13,12 +13,9 @@ import { Order } from './modules/order/entities/order.entity';
 import { OrderItem } from './modules/order/order-item/entities/order-item.entity';
 import { Payment } from './modules/payment/etities/payment.entity';
 import { OrderModule } from './modules/order/order.module';
-<<<<<<< HEAD
 import { Favorite } from './modules/favorite/entities/favorite.entity';
 import { FavoriteModule } from './modules/favorite/favorite.module';
-=======
 import { UserModule } from './modules/user/user.module';
->>>>>>> Chien
 
 @Module({
   imports: [
@@ -37,11 +34,8 @@ import { UserModule } from './modules/user/user.module';
     AuthModule,
     CartModule,
     OrderModule,
-<<<<<<< HEAD
-    FavoriteModule
-=======
-    UserModule,
->>>>>>> Chien
+    FavoriteModule,
+    UserModule
   ],
 })
 export class AppModule {}
