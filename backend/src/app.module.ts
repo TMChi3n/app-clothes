@@ -16,6 +16,7 @@ import { OrderModule } from './modules/order/order.module';
 import { Favorite } from './modules/favorite/entities/favorite.entity';
 import { FavoriteModule } from './modules/favorite/favorite.module';
 import { UserModule } from './modules/user/user.module';
+import { PaymentModule } from './modules/payment/payment.module';
 
 @Module({
   imports: [
@@ -35,7 +36,8 @@ import { UserModule } from './modules/user/user.module';
     CartModule,
     OrderModule,
     FavoriteModule,
-    UserModule
+    UserModule,
+    PaymentModule
   ],
 })
 export class AppModule {}

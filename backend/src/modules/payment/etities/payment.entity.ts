@@ -18,10 +18,13 @@ export class Payment {
   })
   payment_method: string;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({ type: 'timestamp', nullable: true })
   payment_date: Date;
 
-  @Column()
+  @Column({
+    type: 'enum',
+    enum: ['pending', 'completed', 'fail', 'cancelled']
+  })
   status: string;
 
   @ManyToOne(() => Order, (order) => order.payments)
