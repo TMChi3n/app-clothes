@@ -13,6 +13,7 @@ import { Order } from './modules/order/entities/order.entity';
 import { OrderItem } from './modules/order/order-item/entities/order-item.entity';
 import { Payment } from './modules/payment/etities/payment.entity';
 import { OrderModule } from './modules/order/order.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { OrderModule } from './modules/order/order.module';
     AuthModule,
     CartModule,
     OrderModule,
+    UserModule,
   ],
 })
 export class AppModule {}
