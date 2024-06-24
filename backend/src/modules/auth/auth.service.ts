@@ -98,7 +98,7 @@ export class AuthService {
 
     await this.userService.save(user);
 
-    const resetUrl = `http://localhost:3000?token=${token}`;
+    const resetUrl = `http://localhost:3000/reset-password?token=${token}`;
 
     const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -124,6 +124,7 @@ export class AuthService {
   }
 
   async resetPassword(resetPasswordDto: ResetPasswordDto) {
+    console.log('Received reset password request:', resetPasswordDto);
     const { email, token, newPassword, confirmPassword } = resetPasswordDto;
 
     const user = await this.userService.findByEmail(email);
