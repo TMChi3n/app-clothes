@@ -11,11 +11,15 @@ import {
 } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
+import { PaymentService } from '../payment/payment.service';
 
 @Controller('api/v1/order')
 @UseGuards(JwtAuthGuard)
 export class OrderController {
-  constructor(private orderService: OrderService) {}
+  constructor(
+    private orderService: OrderService,
+    private paymentService: PaymentService
+  ) {}
 
   @Post('create')
   async createOrder(@Body() body) {
@@ -39,7 +43,12 @@ export class OrderController {
     @Param('id') id: number,
     @Body('status') status: string,
   ) {
-    return this.orderService.updateOrderStatus(id, status);
+    const order = await this.orderService.updateOrderStatus(id, status);
+    // Nếu trạng thái là 'completed', cập nhật trạng thái thanh toán
+    if (status === 'completed') {
+      await this.paymentService.updatePaymentStatus(id, status);
+    }
+    return order;
   }
 
   @Delete(':id')

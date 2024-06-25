@@ -9,8 +9,9 @@ import { CartModule } from '../cart/cart.module';
 import { ProductModule } from '../product/product.module';
 import { UserModule } from '../user/user.module';
 import { User } from '../user/entities/user.entity';
+import { PaymentModule } from '../payment/payment.module';
 @Module({
-  imports: [TypeOrmModule.forFeature([Order, OrderItem, Payment, User]), CartModule, ProductModule, UserModule],
+  imports: [TypeOrmModule.forFeature([Order, OrderItem, Payment, User]), CartModule, ProductModule, UserModule, PaymentModule],
   controllers: [OrderController],
   providers: [OrderService],
 })

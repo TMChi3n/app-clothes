@@ -11,6 +11,7 @@ import { Payment } from '../payment/etities/payment.entity';
 import { User } from '../user/entities/user.entity';
 import { UserService } from '../user/user.service';
 
+
 @Injectable()
 export class OrderService {
   constructor(
@@ -46,8 +47,6 @@ export class OrderService {
       id_user: userId,
       status: 'pending',
       order_date: new Date(),
-      address: user.address,
-      phone_number: user.phone_number,
     });
 
     // Tạo các mục đơn hàng từ các mục trong giỏ hàng
@@ -63,6 +62,8 @@ export class OrderService {
         id_product: cartItem.id_product,
         quantity: cartItem.quantity,
         price: product.price,
+        address: user.address,
+        phone_number: user.phone_number,
       });
       orderItems.push(orderItem);
     }
@@ -99,6 +100,16 @@ export class OrderService {
       throw new Error('Order not found');
     }
     order.status = status;
+    if (status === 'completed' && !order.completed_date) {
+      order.completed_date = new Date();
+  
+      // Tìm thanh toán dựa trên orderId
+      const payment = await this.paymentRepo.findOne({ where: { id_order: orderId } });
+      if (payment && payment.payment_method === 'cash' && !payment.payment_date) {
+        payment.payment_date = new Date();
+        await this.paymentRepo.save(payment);
+      }
+    }
     return this.orderRepo.save(order);
   }
 
@@ -112,10 +123,9 @@ export class OrderService {
   }
 
   async calculateTotalAmount(orderId: number): Promise<number> {
-    // Tìm đơn hàng dựa trên orderId
     const order = await this.orderRepo.findOne({
       where: { id_order: orderId },
-      relations: ['orderItems'], // Include relation to orderItems
+      relations: ['orderItems'], 
     });
 
     if (!order) {
