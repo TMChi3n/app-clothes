@@ -19,6 +19,12 @@ export class OrderItem {
   @Column({nullable: true})
   price: number;
 
+  @Column({nullable: true}) 
+  address: string;
+
+  @Column({nullable: true})
+  phone_number: number;
+
   @ManyToOne(() => Order, (order) => order.orderItems)
   @JoinColumn({ name: 'id_order' })
   order: Order;
