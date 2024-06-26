@@ -21,7 +21,6 @@ export class UserService {
       email,
       password: hashPassword,
       role,
-      avatar,
     } as Partial<User>);
     return this.userRepo.save(newUser);
   }

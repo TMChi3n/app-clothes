@@ -21,7 +21,8 @@ export class User {
   role: 'admin' | 'user';
 
   @Column('longblob', { nullable: true })
-  avatar: string;
+  avatar: string =
+    'https://www.google.com/url?sa=i&url=https%3A%2F%2Fcellphones.com.vn%2Fsforum%2Favatar-trang&psig=AOvVaw1iBY_-RwyiKn2FjCSjqqhL&ust=1719392502598000&source=images&cd=vfe&opi=89978449&ved=0CA8QjRxqFwoTCKji26yy9oYDFQAAAAAdAAAAABAE';
 
   @Column({ nullable: true })
   resetPasswordToken: string;
