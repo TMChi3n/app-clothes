@@ -8,6 +8,7 @@ import {
   Patch,
   Request,
   Delete,
+  Query
 } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
@@ -59,5 +60,16 @@ export class OrderController {
   @Get(':id/totalAmount')
   async getOrderTotalAmount(@Param('id') id: number): Promise<number> {
     return this.orderService.calculateTotalAmount(id);
+  }
+
+  @Get()
+  async getAllOrders(
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
+    @Query('status') status?: string,
+  ) {
+    const parsedStartDate = startDate ? new Date(startDate) : undefined;
+    const parsedEndDate = endDate ? new Date(endDate) : undefined;
+    return this.orderService.getAllOrders(parsedStartDate, parsedEndDate, status);
   }
 }

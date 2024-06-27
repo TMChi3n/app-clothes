@@ -27,6 +27,9 @@ export class Payment {
   })
   status: string;
 
+  @Column({ type: 'text', nullable: true })
+  payment_link: string;
+
   @ManyToOne(() => Order, (order) => order.payments)
   @JoinColumn({ name: 'id_order' })
   order: Order;

@@ -140,4 +140,22 @@ export class OrderService {
 
     return totalAmount;
   }
+
+  async getAllOrders(startDate?: Date, endDate?: Date, status?: string): Promise<Order[]> {
+    const queryBuilder = this.orderRepo.createQueryBuilder('order');
+
+    if (startDate) {
+      queryBuilder.andWhere('order.order_date >= :startDate', { startDate });
+    }
+
+    if (endDate) {
+      queryBuilder.andWhere('order.order_date <= :endDate', { endDate });
+    }
+
+    if (status) {
+      queryBuilder.andWhere('order.status = :status', { status });
+    }
+
+    return queryBuilder.getMany();
+  }
 }
