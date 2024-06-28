@@ -11,7 +11,6 @@ import { CartItem } from './modules/cart/cart-item/entities/cart-item.entity';
 import { CartModule } from './modules/cart/cart.module';
 import { Order } from './modules/order/entities/order.entity';
 import { OrderItem } from './modules/order/order-item/entities/order-item.entity';
-import { Payment } from './modules/payment/etities/payment.entity';
 import { OrderModule } from './modules/order/order.module';
 import { UserModule } from './modules/user/user.module';
 
@@ -26,7 +25,7 @@ import { UserModule } from './modules/user/user.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
       synchronize: true,
-      entities: [Product, User, Cart, CartItem, Order, OrderItem, Payment],
+      entities: [Product, User, Cart, CartItem, Order, OrderItem],
     }),
     ProductModule,
     AuthModule,
