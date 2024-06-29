@@ -56,13 +56,18 @@ export class ProductService {
   }
 
   async filterProducts(
-    products: Product[],
+    [],
     priceMin?: number,
     priceMax?: number,
     type?: string,
     person?: string,
   ): Promise<Product[]> {
-    let filteredProducts = products;
+
+    if (priceMin === undefined && priceMax === undefined && type === undefined && person === undefined) {
+      return [];
+    }
+    
+    let filteredProducts = await this.productRepo.find();
 
     if (priceMin !== undefined && priceMax !== undefined) {
       filteredProducts = filteredProducts.filter(

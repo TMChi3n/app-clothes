@@ -1,6 +1,10 @@
 import 'dart:convert';
+import 'dart:typed_data';
+import 'package:clothes_app/services/servicesForProduct.dart';
+
 
 List<Products> productFromJson(String str) => List<Products>.from(json.decode(str).map((x) => Products.fromJson(x)));
+
 class Products {
   Products({
     required this.id_product,
@@ -9,10 +13,8 @@ class Products {
     required this.material,
     required this.overview,
     required this.price,
-    required this.image_Url,
+    required this.imageData,
     required this.type,
-
-
 });
   final int id_product;
   final String name;
@@ -20,36 +22,35 @@ class Products {
   final String material;
   final String overview;
   final double price;
-  final String image_Url;
+  final List<int> imageData;
   final String type;
-  //
-  // Phương thức để chuyển đổi từ JSON sang đối tượng Product
+
   factory Products.fromJson(Map<String, dynamic> json) {
+    List<int> imgData= [];
+    if(json['img_url'] != null && json['img_url']['data']!=null ){
+      imgData = List<int>.from(json['img_url']['data']);
+    }
     return Products(
+
       id_product: json['id_product'],
       name: json['name'],
       person: json['person'],
       material: json['material'],
       overview: json['overview'],
-      price: json['price'],
-      image_Url: json['img_url'],
+      price: double.parse(json['price'].toString()),
+      // imageData: ServicesForProduct.ConvertToUin8list(List<int>.from(json['img_']['data'])),
+      imageData: imgData,
       type: json['type'],
     );
   }
-
-  // Phương thức để chuyển đổi từ đối tượng Product sang JSON
-  Map<String, dynamic> toJson() {
-    return {
-      'id_product': id_product,
-      'name': name,
-      'person': person,
-      'material': material,
-      'overview': overview,
-      'price': price,
-      'img_url': image_Url,
-      'type': type,
-    };
+  @override
+  String toString() {
+    return 'Products{id_product: $id_product, name: $name,imageData: $imageData, person: $person,  price: $price, type: $type}';
   }
+}
 
-  }
+
+
+
+
 
