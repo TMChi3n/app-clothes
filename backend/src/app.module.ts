@@ -11,6 +11,7 @@ import { CartItem } from './modules/cart/cart-item/entities/cart-item.entity';
 import { CartModule } from './modules/cart/cart.module';
 import { Order } from './modules/order/entities/order.entity';
 import { OrderItem } from './modules/order/order-item/entities/order-item.entity';
+import { Payment } from './modules/payment/etities/payment.entity';
 import { OrderModule } from './modules/order/order.module';
 import { Favorite } from './modules/favorite/entities/favorite.entity';
 import { FavoriteModule } from './modules/favorite/favorite.module';
