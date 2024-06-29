@@ -28,11 +28,7 @@ import { PaymentModule } from './modules/payment/payment.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
       synchronize: true,
-<<<<<<< HEAD
       entities: [Product, User, Cart, CartItem, Order, OrderItem, Payment, Favorite],
-=======
-      entities: [Product, User, Cart, CartItem, Order, OrderItem],
->>>>>>> Chien
     }),
     ProductModule,
     AuthModule,

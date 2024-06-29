@@ -10,11 +10,7 @@ import { UserModule } from '../user/user.module';
 import { User } from '../user/entities/user.entity';
 import { PaymentModule } from '../payment/payment.module';
 @Module({
-<<<<<<< HEAD
   imports: [TypeOrmModule.forFeature([Order, OrderItem, Payment, User]), CartModule, ProductModule, UserModule, PaymentModule],
-=======
-  imports: [TypeOrmModule.forFeature([Order, OrderItem]), CartModule],
->>>>>>> Chien
   controllers: [OrderController],
   providers: [OrderService],
 })
