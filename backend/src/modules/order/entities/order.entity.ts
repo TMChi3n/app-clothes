@@ -16,7 +16,10 @@ export class Order {
   @Column()
   id_user: number;
 
-  @Column()
+  @Column({
+    type: 'enum',
+    enum: ['pending', 'processing', 'completed', 'cancelled'],
+  })
   status: string;
 
   @Column()
