@@ -12,7 +12,7 @@ export class Order {
 
   @Column({
     type: 'enum',
-    enum: ['pending', 'processing', 'completed', 'cancelled']
+    enum: ['pending', 'processing', 'completed', 'cancelled'],
   })
   status: string;
 
