@@ -142,7 +142,7 @@ export class OrderService {
   }
 
   async getAllOrders(startDate?: Date, endDate?: Date, status?: string): Promise<Order[]> {
-    const queryBuilder = this.orderRepo.createQueryBuilder('order');
+    const queryBuilder = this.orderRepo.createQueryBuilder('order').leftJoinAndSelect('order.orderItems', 'orderItems')
 
     if (startDate) {
       queryBuilder.andWhere('order.order_date >= :startDate', { startDate });
