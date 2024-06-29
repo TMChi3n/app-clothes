@@ -48,6 +48,6 @@ export class User {
   @OneToMany(() => Order, (order) => order.user)
   orders: Order[];
 
-  @OneToMany(() => Favorite, favorite => favorite.user)
+  @OneToMany(() => Favorite, (favorite) => favorite.user)
   favorites: Favorite[];
 }

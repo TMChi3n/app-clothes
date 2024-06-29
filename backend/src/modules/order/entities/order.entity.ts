@@ -18,7 +18,7 @@ export class Order {
 
   @Column({
     type: 'enum',
-    enum: ['pending', 'processing', 'completed', 'cancelled']
+    enum: ['pending', 'processing', 'completed', 'cancelled'],
   })
   status: string;
 
@@ -28,7 +28,7 @@ export class Order {
   @Column({ nullable: true })
   completed_date: Date;
 
-  @Column() 
+  @Column()
   address: string;
 
   @Column()
