@@ -1,10 +1,11 @@
 
-import 'package:clothes_app/controllers/mainscreen_notifier.dart';
+import 'package:clothes_app/controllers/mainscreen.dart';
 import 'package:clothes_app/view/ui/FavPage.dart';
 import 'package:clothes_app/view/ui/cart_screen.dart';
 import 'package:clothes_app/view/ui/home_screen.dart';
 import 'package:clothes_app/view/ui/profilepage.dart';
 import 'package:clothes_app/view/ui/searchpage.dart';
+import 'package:clothes_app/view/ui/unauthenticated/guest_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,10 +16,10 @@ class MainScreen extends StatelessWidget{
   MainScreen({super.key});
   List<Widget> pageList =  [
   const  HomePage(),
-  const  FavoPage(),
   const  SearchPage(),
-    CartPage(),
-  const  ProfilePage()
+    const CartPage(),
+  const  ProfilePage(),
+    GuestProfile(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class MainScreen extends StatelessWidget{
       builder: (context,mainScreenNotifier, child) {
         return Scaffold(
           body: pageList[mainScreenNotifier.pageIndex],
-          bottomNavigationBar: const BottomNav(),
+          bottomNavigationBar:const BottomNav(),
         );
       },
     );

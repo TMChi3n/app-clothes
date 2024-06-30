@@ -38,10 +38,7 @@ async createPaymentLink(requestData: any) {
     const payment = await this.paymentRepository.findOne({ where: { id_order: requestData.orderId } });
     if (!payment) {
       throw new Error(`Payment information for order ${requestData.orderId} not found`);
-    } else{
-      payment.total_amount = requestData.amount;
-      payment.id_order = requestData.orderId;
-    }
+    } 
 
     // Chuyển đổi total_amount thành số và gán vào requestData.amount
     requestData.amount = +payment.total_amount;

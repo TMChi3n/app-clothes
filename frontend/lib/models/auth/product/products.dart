@@ -1,9 +1,7 @@
 import 'dart:convert';
-import 'dart:typed_data';
-import 'package:clothes_app/services/servicesForProduct.dart';
 
-
-List<Products> productFromJson(String str) => List<Products>.from(json.decode(str).map((x) => Products.fromJson(x)));
+List<Products> productFromJson(String str) =>
+    List<Products>.from(json.decode(str).map((x) => Products.fromJson(x)));
 
 class Products {
   Products({
@@ -15,7 +13,7 @@ class Products {
     required this.price,
     required this.imageData,
     required this.type,
-});
+  });
   final int id_product;
   final String name;
   final String person;
@@ -26,12 +24,12 @@ class Products {
   final String type;
 
   factory Products.fromJson(Map<String, dynamic> json) {
-    List<int> imgData= [];
-    if(json['img_url'] != null && json['img_url']['data']!=null ){
+    List<int> imgData = [];
+    if (json['img_url'] != null && json['img_url']['data'] != null) {
       imgData = List<int>.from(json['img_url']['data']);
     }
-    return Products(
 
+    return Products(
       id_product: json['id_product'],
       name: json['name'],
       person: json['person'],
@@ -43,14 +41,4 @@ class Products {
       type: json['type'],
     );
   }
-  @override
-  String toString() {
-    return 'Products{id_product: $id_product, name: $name,imageData: $imageData, person: $person,  price: $price, type: $type}';
-  }
 }
-
-
-
-
-
-
