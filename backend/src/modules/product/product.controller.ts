@@ -11,6 +11,7 @@ import {
 import { ProductService } from './product.service';
 import { Product } from './entities/product.entity';
 import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
 
 @Controller('api/v1/product')
 export class ProductController {
@@ -34,9 +35,9 @@ export class ProductController {
   @Put('/update/:id')
   updateProduct(
     @Param('id') id_product: number,
-    @Body() createProductDto: CreateProductDto,
+    @Body() updateProductDto: UpdateProductDto, 
   ): Promise<Product> {
-    return this.productService.updateProduct(id_product, createProductDto);
+    return this.productService.updateProduct(id_product, updateProductDto);
   }
 
   @Delete('/delete/:id')
