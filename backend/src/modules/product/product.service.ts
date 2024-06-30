@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
 import { Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
 @Injectable()
 export class ProductService {
   constructor(
@@ -34,18 +35,31 @@ export class ProductService {
 
   async updateProduct(
     id_product: number,
-    createProductDto: CreateProductDto,
+    updateProductDto: UpdateProductDto, 
   ): Promise<Product> {
     const product = await this.findProductById(id_product);
-    const { name, person, material, overview, price, img_url, type } =
-      createProductDto;
-    product.name = name;
-    product.person = person;
-    product.material = material;
-    product.overview = overview;
-    product.price = price;
-    product.img_url = img_url;
-    product.type = type;
+
+    if (updateProductDto.name !== undefined) {
+      product.name = updateProductDto.name;
+    }
+    if (updateProductDto.person !== undefined) {
+      product.person = updateProductDto.person;
+    }
+    if (updateProductDto.material !== undefined) {
+      product.material = updateProductDto.material;
+    }
+    if (updateProductDto.overview !== undefined) {
+      product.overview = updateProductDto.overview;
+    }
+    if (updateProductDto.price !== undefined) {
+      product.price = updateProductDto.price;
+    }
+    if (updateProductDto.img_url !== undefined) {
+      product.img_url = updateProductDto.img_url;
+    }
+    if (updateProductDto.type !== undefined) {
+      product.type = updateProductDto.type;
+    }
 
     return await this.productRepo.save(product);
   }
