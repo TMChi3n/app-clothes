@@ -35,30 +35,14 @@ export class ProductService {
 
   async updateProduct(
     id_product: number,
-    updateProductDto: UpdateProductDto, 
+    updateProductDto: UpdateProductDto,
   ): Promise<Product> {
     const product = await this.findProductById(id_product);
 
-    if (updateProductDto.name !== undefined) {
-      product.name = updateProductDto.name;
-    }
-    if (updateProductDto.person !== undefined) {
-      product.person = updateProductDto.person;
-    }
-    if (updateProductDto.material !== undefined) {
-      product.material = updateProductDto.material;
-    }
-    if (updateProductDto.overview !== undefined) {
-      product.overview = updateProductDto.overview;
-    }
-    if (updateProductDto.price !== undefined) {
-      product.price = updateProductDto.price;
-    }
-    if (updateProductDto.img_url !== undefined) {
-      product.img_url = updateProductDto.img_url;
-    }
-    if (updateProductDto.type !== undefined) {
-      product.type = updateProductDto.type;
+    for (const [key, value] of Object.entries(updateProductDto)) {
+      if (value !== undefined) {
+        product[key] = value;
+      }
     }
 
     return await this.productRepo.save(product);
