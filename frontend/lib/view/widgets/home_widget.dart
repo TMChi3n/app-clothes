@@ -1,33 +1,38 @@
+import 'package:clothes_app/controllers/product.dart';
+import 'package:clothes_app/view/ui/productpage.dart';
 import 'package:clothes_app/view/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-
-import '../../models/products.dart';
+import 'package:provider/provider.dart';
+import '../../models/auth/product/products.dart';
 import 'appstyle.dart';
 import 'newproducts.dart';
 
 class HomeWidget extends StatelessWidget {
   const HomeWidget({
     super.key,
-    required Future<List<Products>> male,
+    required Future<List<Products>> male
   }) : _male = male;
 
   final Future<List<Products>> _male;
-
+  // final int tabIndex;
   @override
   Widget build(BuildContext context) {
+    var productNotifier = Provider.of<ProductNotifier>(context);
     return Column(
       children: [
         SizedBox(
-          height: MediaQuery.of(context).size.height * 0.405,
+          height: MediaQuery.of(context).size.height * 0.40,
           child:FutureBuilder<List<Products>>(
             future: _male,
             builder: (context,snapshoot){
               if (snapshoot.connectionState == ConnectionState.waiting){
-                return CircularProgressIndicator();
+                return const Center(child: CircularProgressIndicator.adaptive());
               }
               else if(snapshoot.hasError){
                 return Text("Lỗi : ${snapshoot.error}");
+              }else if(!snapshoot.hasData || snapshoot.data!.isEmpty){
+                return const Center(child: Text("Không có dữ liệu"));
               }
               else{
                 final male =snapshoot.data;
@@ -36,12 +41,25 @@ class HomeWidget extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemBuilder:(context,index){
                     final product = snapshoot.data![index];
-                    return const ProductCard(
-                      id_product: "1",
-                      name: "Áo Gu-Chì",
-                      category: "Áo sơ mi",
-                      price: "200000 \$ VND",
-                      img_url: "https://firebasestorage.googleapis.com/v0/b/tn252-385da.appspot.com/o/demo.jpg?alt=media&token=02c2e882-ca7c-4a12-91f3-98a4556271a7",
+                    return GestureDetector(
+                      onTap:(){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>Productpage(
+                                  id: product.id_product,
+                                  type: product.type)
+                          )
+                      );
+                    },
+                      child: ProductCard(
+                        name: product.name,
+                        id_product: product.id_product,
+                        type: product.type,
+                        price:product.price,
+                        imgData: product.imageData,
+                      ),
+
                     );
                   },
                 );
@@ -101,7 +119,7 @@ class HomeWidget extends StatelessWidget {
                     final product = snapshoot.data![index];
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: NewProducts(imageUrl: product.image_Url),
+                      child: NewProducts(imgData: product.imageData),
                     );
                   },
                 );
