@@ -35,8 +35,9 @@ export class ProductController {
   @Put('/update/:id')
   updateProduct(
     @Param('id') id_product: number,
-    @Body() updateProductDto: UpdateProductDto, 
+    @Body() updateProductDto: UpdateProductDto,
   ): Promise<Product> {
+    console.log('Received update payload:', updateProductDto);
     return this.productService.updateProduct(id_product, updateProductDto);
   }
 

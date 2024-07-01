@@ -39,8 +39,13 @@ export class ProductService {
   ): Promise<Product> {
     const product = await this.findProductById(id_product);
 
+    if (!product) {
+      throw new Error('Product not found');
+    }
+
     for (const [key, value] of Object.entries(updateProductDto)) {
       if (value !== undefined) {
+        console.log(`Updating ${key} to ${value}`);
         product[key] = value;
       }
     }
@@ -60,11 +65,15 @@ export class ProductService {
     type?: string,
     person?: string,
   ): Promise<Product[]> {
-
-    if (priceMin === undefined && priceMax === undefined && type === undefined && person === undefined) {
+    if (
+      priceMin === undefined &&
+      priceMax === undefined &&
+      type === undefined &&
+      person === undefined
+    ) {
       return [];
     }
-    
+
     let filteredProducts = await this.productRepo.find();
 
     if (priceMin !== undefined && priceMax !== undefined) {

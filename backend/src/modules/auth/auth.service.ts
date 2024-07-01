@@ -189,4 +189,14 @@ export class AuthService {
     await this.userRepo.save(updateUser);
     return updateUser;
   }
+
+  async updateRole(userId: number, role: 'admin' | 'user'): Promise<User> {
+    const user = await this.userRepo.findOne({ where: { id_user: userId } });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    user.role = role;
+    await this.userRepo.save(user);
+    return user;
+  }
 }
