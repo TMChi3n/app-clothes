@@ -13,6 +13,8 @@ import {
 import { OrderService } from './order.service';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 import { PaymentService } from '../payment/payment.service';
+import { RoleGuard } from 'src/common/guards/role-auth.guard';
+import { Role } from 'src/common/decorators/role';
 
 @Controller('api/v1/order')
 @UseGuards(JwtAuthGuard)
@@ -45,6 +47,8 @@ export class OrderController {
   }
 
   @Patch(':id/status')
+  @UseGuards(JwtAuthGuard, RoleGuard) 
+  @Role('admin')
   async updateOrderStatus(
     @Param('id') id: number,
     @Body('status') status: string,
