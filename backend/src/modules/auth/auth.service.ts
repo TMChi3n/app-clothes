@@ -16,6 +16,8 @@ import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import * as crypto from 'crypto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
 import { UpdateUserDto } from '../user/dto/update-user.dto';
+import { ChangePasswordDto } from './dto/change-password';
+import { UserProfileDto } from './dto/profile-user';
 
 @Injectable()
 export class AuthService {
@@ -165,29 +167,29 @@ export class AuthService {
     }
 
     // Update only the provided fields in DTO
-    const updateUser = { ...user };
+    // const updateUser = { ...user };
     if (updateUserDto.username) {
-      updateUser.username = updateUserDto.username;
+      user.username = updateUserDto.username;
     }
 
     if (updateUserDto.avatar) {
-      updateUser.avatar = updateUserDto.avatar;
+      user.avatar = updateUserDto.avatar;
     }
     if (updateUserDto.gender) {
-      updateUser.gender = updateUserDto.gender;
+      user.gender = this.convertGenderToEnglish(updateUserDto.gender);
     }
     if (updateUserDto.birthday) {
-      updateUser.birthday = new Date(updateUserDto.birthday);
+      user.birthday = new Date(updateUserDto.birthday);
     }
     if (updateUserDto.address) {
-      updateUser.address = updateUserDto.address;
+      user.address = updateUserDto.address;
     }
     if (updateUserDto.phone_number) {
-      updateUser.phone_number = updateUserDto.phone_number;
+      user.phone_number = updateUserDto.phone_number;
     }
 
-    await this.userRepo.save(updateUser);
-    return updateUser;
+    await this.userRepo.save(user);
+    return user;
   }
 
   async updateRole(userId: number, role: 'admin' | 'user'): Promise<User> {
@@ -198,5 +200,49 @@ export class AuthService {
     user.role = role;
     await this.userRepo.save(user);
     return user;
+  }
+
+  async changePassword(
+    id_user: number,
+    changePassword: ChangePasswordDto,
+  ): Promise<{ message: string }> {
+    const { currentPassword, newPassword } = changePassword;
+    const user = await this.userRepo.findOne({ where: { id_user } });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+
+    if (!isMatch) {
+      throw new BadRequestException('Current password is incorrect');
+    }
+
+    user.password = await bcrypt.hash(newPassword, 10);
+    await this.userRepo.save(user);
+    return { message: 'Password has been changed successfully' };
+  }
+
+  async viewProfile(id_user: number): Promise<UserProfileDto> {
+    const user = await this.userRepo.findOne({ where: { id_user } });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const profile: UserProfileDto = {
+      username: user.username,
+      address: user.address,
+      gender: user.genderInVietnamese,
+      birthday: user.birthday,
+      phone_number: user.phone_number,
+    };
+
+    return profile;
+  }
+
+  private convertGenderToEnglish(gender: 'Nam' | 'Nữ'): 'male' | 'female' {
+    if (gender === 'Nam') return 'male';
+    if (gender === 'Nữ') return 'female';
+    throw new BadRequestException('Invalid gender');
   }
 }

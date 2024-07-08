@@ -50,4 +50,8 @@ export class User {
 
   @OneToMany(() => Favorite, (favorite) => favorite.user)
   favorites: Favorite[];
+
+  get genderInVietnamese(): string {
+    return this.gender === 'male' ? 'Nam' : 'Nữ';
+  }
 }
