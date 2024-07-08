@@ -21,7 +21,7 @@ class Helper{
       final maleList = productFromJson(response.body);
       var profmale = maleList.where((element) => element.person == 'male');
       // Print to Logcat with tag
-      debugPrint('$logTag: ${profmale.toList()}');
+      //debugPrint('$logTag: ${profmale.toList()}');
       return profmale.toList();
     } else {
       throw Exception("Lỗi khi lấy sản phẩm cho male");

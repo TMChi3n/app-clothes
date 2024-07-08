@@ -12,12 +12,17 @@ class BottomNaviWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: SizedBox(
-        height: 36,
-        width: 39,
-        child: Icon(icon, color: Colors.black),
+    return Expanded(
+      child: GestureDetector(
+        onTap: onTap,
+        child: SizedBox(
+          height: 37,
+          child: Icon(
+            icon,
+            color: Colors.blue,
+            size: 25, // Adjust icon size if needed
+          ),
+        ),
       ),
     );
   }
