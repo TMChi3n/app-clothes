@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Query,
+  Get,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from 'src/common/guards/local-auth.guard';
@@ -18,6 +19,8 @@ import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 import { RoleGuard } from 'src/common/guards/role-auth.guard';
 import { Role } from 'src/common/decorators/role';
 import { UpdateRoleDto } from './dto/update-role';
+import { ChangePasswordDto } from './dto/change-password';
+import { UserProfileDto } from './dto/profile-user';
 
 @Controller('api/v1/auth')
 export class AuthController {
@@ -75,5 +78,20 @@ export class AuthController {
   ) {
     const { role } = updateRoleDto;
     return this.authService.updateRole(id, role);
+  }
+
+  @Patch('/change-password/:id')
+  @UseGuards(JwtAuthGuard)
+  async changePassword(
+    @Param('id') id_user: number,
+    @Body() changePasswordDto: ChangePasswordDto,
+  ): Promise<{ message: string }> {
+    return this.authService.changePassword(id_user, changePasswordDto);
+  }
+
+  @Get('profile/:id')
+  @UseGuards(JwtAuthGuard)
+  async viewProfile(@Param('id') id_user: number): Promise<UserProfileDto> {
+    return this.authService.viewProfile(id_user);
   }
 }
