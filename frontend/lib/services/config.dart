@@ -1,5 +1,5 @@
 class Config {
-  static const String apiLocalhost = '55slkn6k-8080.asse.devtunnels.ms';
+  static const String apiLocalhost = 'zxhhmd3z-8080.asse.devtunnels.ms';
   static const String login_Url = '/api/v1/auth/login';
   static const String register_Url = '/api/v1/auth/register';
   static const String getProductByidProduct = "/api/v1/product/get/:id";
