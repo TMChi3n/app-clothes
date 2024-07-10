@@ -1,9 +1,6 @@
-import 'dart:convert';
-
-import 'package:clothes_app/models/products.dart';
+import 'package:clothes_app/models/auth/product/products.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart' as the_bundle;
-import 'package:clothes_app/models/orders/clothes_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:clothes_app/services/config.dart';
 

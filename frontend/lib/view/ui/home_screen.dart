@@ -1,15 +1,8 @@
-import 'dart:ui';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clothes_app/services/servicesForHome.dart';
 import 'package:clothes_app/view/widgets/home_widget.dart';
-import 'package:clothes_app/view/widgets/newproducts.dart';
-import 'package:clothes_app/view/widgets/product_card.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:clothes_app/view/widgets/appstyle.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import '../../models/products.dart';
+import '../../models/auth/product/products.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -46,13 +39,13 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE2E2E),
+      backgroundColor: const Color(0x0ffe2e2e),
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: Stack(
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 10),
               child: Container(
                 color: Colors.white,
                 padding: const EdgeInsets.fromLTRB(16, 5, 0, 0),
@@ -63,7 +56,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       padding: EdgeInsets.only(left: 6.0),
                       child: CircleAvatar(
                         radius: 20,
-                        backgroundImage: AssetImage("assets/images/user.jpg"),
+                       backgroundImage: AssetImage("assets/images/user.png"),
                       ),
                     ),
                     SizedBox(
@@ -72,12 +65,12 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     Expanded(
                       child: Text(
                         'Name',
-                        style: TextStyle(fontSize: 20, color: Colors.blueAccent),
+                        style: TextStyle(fontSize: 26, color: Colors.black),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(right: 6.0),
-                      child: Icon(Icons.settings, color: Colors.blueAccent),
+                      child: Icon(Icons.settings, color: Colors.black),
                     ),
                   ],
                 ),

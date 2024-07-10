@@ -1,15 +1,17 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class NewProducts extends StatelessWidget {
   const NewProducts({
-    super.key, required this.imageUrl,
+    super.key, required this.imgData,
   });
 
-  final String imageUrl;
+  final List<int> imgData;
 
   @override
   Widget build(BuildContext context) {
+    // Chuyển đổi imgData từ danh sách byte thành chuỗi URL
+    String urlString = String.fromCharCodes(imgData);
+    print('Url của ảnh (URL) trong NewProducts: $urlString');
     return Container(
       decoration:const BoxDecoration(
         color: Colors.white,
@@ -23,11 +25,15 @@ class NewProducts extends StatelessWidget {
         ],
       ),
       height: MediaQuery.of(context).size.height *
-          0.12,
+          0.15,
       width: MediaQuery.of(context).size.width *
           0.28,
-      child: CachedNetworkImage(
-        imageUrl: imageUrl,
+      child: Image.network(
+        urlString,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          return Center(child: Text('----Lỗi khi load ảnh ở NewProducts: $error------'));
+        },
       ),
     );
   }
