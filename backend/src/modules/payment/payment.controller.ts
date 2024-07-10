@@ -1,8 +1,10 @@
-import { Controller, Post, Body, Param, Get, Patch, Delete, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Controller, Post, Body, Param, Get, Patch, Delete, NotFoundException, BadRequestException, UseGuards } from '@nestjs/common';
 import { Payment } from './etities/payment.entity';
 import { PaymentService } from './payment.service';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
 @Controller('api/v1/payment')
+@UseGuards(JwtAuthGuard)
 export class PaymentController {
   constructor(private readonly paymentService: PaymentService) {}
 
