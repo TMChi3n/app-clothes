@@ -1,7 +1,14 @@
+import 'package:clothes_app/controllers/login.dart';
+import 'package:clothes_app/view/ui/FavPage.dart';
+import 'package:clothes_app/view/ui/cart_screen.dart';
+import 'package:clothes_app/view/ui/loginpage.dart';
+import 'package:clothes_app/view/ui/unauthenticated/guest_profile.dart';
+import 'package:clothes_app/view/ui/updateProfile.dart';
+import 'package:clothes_app/view/widgets/optionsOnProfilePage.dart';
 import 'package:flutter/material.dart';
-import 'package:clothes_app/view/widgets/appstyle.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/reusable_text.dart';
 
@@ -13,9 +20,12 @@ class ProfilePage extends StatefulWidget {
 }
 
 class ProfilePageState extends State<ProfilePage> {
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    var notifier = Provider.of<LoginNotifier>(context);
+    return notifier.logged == false? GuestProfile():  Scaffold(
+      backgroundColor: const Color(0xFFE1E1E1) ,
         appBar: AppBar(
           backgroundColor: const Color(0xFFE1E1E1),
           elevation: 0,
@@ -75,26 +85,13 @@ class ProfilePageState extends State<ProfilePage> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
 
-                                    ReusableText(
-                                          text: "Tên",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 19,
-                                              fontStyle: FontStyle.normal)
-                                    ),
-                                    ReusableText(
-                                        text: " Email",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 17,
-                                            fontStyle: FontStyle.italic)
-                                    ),
-
                                   ],
                                 ),
                                 const Spacer(),
                                     GestureDetector(
                                         onTap: () {
+                                          Navigator.push(context,
+                                              MaterialPageRoute(builder: (context)  => UpdateProfile()));
                                         },
                                         child: Icon(Feather.edit_2)
                                     )
@@ -102,8 +99,6 @@ class ProfilePageState extends State<ProfilePage> {
 
                               ],
                             ),
-
-
                           ],
                         ),
                       ),
@@ -113,79 +108,59 @@ class ProfilePageState extends State<ProfilePage> {
               Column(
                 children: [
                   SizedBox(
-                    height: 10.h,
+                    height: 20.h,
                   ),
                   Container(
-                    height: 160.h,
-                    color: Colors.grey.shade200,
+                    color: Colors.white,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            const ReusableText(
-                                text: 'Giỏ hàng',
-                                style: TextStyle(fontSize: 15,color: Colors.black,fontStyle: FontStyle.normal)
-                            ),
-                            const Spacer(),
-                            GestureDetector(
-                                onTap: () {
-                                },
-                                child: const Icon(Feather.shopping_cart),
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: [
-                            const ReusableText(
-                                text: 'Yêu thích',
-                                style: TextStyle(fontSize: 15,color: Colors.black,fontStyle: FontStyle.normal)
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                              },
-                              child: const Icon(Feather.heart),
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: [
-                            const ReusableText(
+                            Options(
+                              onTap: () {},
                                 text: 'Đơn hàng',
-                                style: TextStyle(fontSize: 15,color: Colors.black,fontStyle: FontStyle.normal)
+                                icon: AntDesign.check,
                             ),
-                            GestureDetector(
-                              onTap: () {
-                              },
-                              child: const Icon(Feather.check),
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: [
-                            const ReusableText(
-                                text: 'Đăng xuất',
-                                style: TextStyle(fontSize: 15,color: Colors.black,fontStyle: FontStyle.normal)
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                              },
-                              child: const Icon(Feather.log_out),
-                            )
-                          ],
-                        ),
+                            Options(
+                                onTap: () {
+                                  Navigator.push(
+                                      context, MaterialPageRoute(
+                                    builder: (context) =>const CartPage(),));
+                                  },
+                                text: 'Giỏ hàng',
+                                icon: AntDesign.shoppingcart),
+                            Options(
+                                onTap: () {
+                                  Navigator.push(
+                                      context, MaterialPageRoute(
+                                      builder: (context) =>const FavoPage()));
+                                },
+                                text: 'Yêu thích',
+                                icon: AntDesign.hearto),
+                            Options(
+                                onTap: () {},
+                                text: 'Địa chỉ giao hàng',
+                                icon: SimpleLineIcons.location_pin),
 
                       ],
                     )
+                  ),
+                  SizedBox(height: 10),
+
+                  Container(
+                    color:  Colors.white,
+                    child: Column(
+                      children: [
+                    Options(
+                        onTap: () {
+                          notifier.LogOut();
+                          Navigator.push(
+                            context, MaterialPageRoute(builder:
+                          (context) => LoginPage()));
+                        },
+                        text: 'Đăng xuất',
+                        icon: AntDesign.logout),
+                   ]
+                    ),
                   ),
                 ],
 

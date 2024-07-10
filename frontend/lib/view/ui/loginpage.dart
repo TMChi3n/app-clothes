@@ -19,20 +19,20 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
-  bool flag = false;
+  bool isValid = false; // biến này dùng để xác thực có hợp lẹe để yêu cầu đăng nhập hay k
 
   void toConfirm() {
 
       if (email.text.isNotEmpty && password.text.isNotEmpty) {
-        flag = true;
+        isValid = true;
       } else {
-        flag = false;
+        isValid = false;
       }
   }
 
   @override
   Widget build(BuildContext context) {
-    var auNotifi = Provider.of<LoginNotifier>(context);
+    var notifier = Provider.of<LoginNotifier>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -73,14 +73,14 @@ class _LoginPageState extends State<LoginPage> {
               height: 10.h,
             ),
             CustomTextField(
-              obscureText: auNotifi.isObsecure,
+              obscureText: notifier.isObsecure,
               controller: password,
-              hintText: "Password",
+              hintText: "Mật khẩu ",
               suffixIcon: GestureDetector(
                 onTap: () {
-                  auNotifi.isObsecure = !auNotifi.isObsecure;
+                  notifier.isObsecure = !notifier.isObsecure;
                 },
-                child: auNotifi.isObsecure
+                child: notifier.isObsecure
                     ? Icon(Icons.visibility)
                     : Icon(Icons.visibility),
               ),
@@ -126,14 +126,14 @@ class _LoginPageState extends State<LoginPage> {
             GestureDetector(
               onTap: () {
                 toConfirm();
-                if (flag == true) {
+                if (isValid == true) {
                   debugPrint("Xác nhận chuẩn bị đăng nhập");
                   debugPrint("Email: ${email.text}");
                   debugPrint("Password: ${password.text}");
                   LoginModel model = LoginModel(
                       email: email.text,
                       password: password.text);
-                  auNotifi.userLogin(model).then((response){
+                  notifier.userLogin(model).then((response){
                     if(response == true){
                     Navigator.push(
                         context,MaterialPageRoute(

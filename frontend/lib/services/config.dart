@@ -4,4 +4,5 @@ class Config{
   static const String register_Url = '/api/v1/auth/register';
   static const String getProductByidProduct = "/api/v1/product/get/:id";
   static const String getAllProduct = '/api/v1/product/get';
+  static const String updateProfileUser = '/api/v1/auth/update-profile/' ;
 }

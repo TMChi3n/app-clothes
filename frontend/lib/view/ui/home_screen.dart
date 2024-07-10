@@ -1,83 +1,126 @@
+import 'dart:convert';
+import 'dart:typed_data';
 import 'dart:ui';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clothes_app/services/servicesForHome.dart';
 import 'package:clothes_app/view/widgets/home_widget.dart';
-import 'package:clothes_app/view/widgets/newproducts.dart';
-import 'package:clothes_app/view/widgets/product_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:clothes_app/view/widgets/appstyle.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/auth/product/products.dart';
+import 'package:clothes_app/view/widgets/customtab.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
   State<HomePage> createState() => HomePageState();
-
 }
 
 class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late final TabController _tabController =
-      TabController(length: 3, vsync: this);
+  TabController(length: 3, vsync: this);
   late Future<List<Products>> _male;
   late Future<List<Products>> _female;
   late Future<List<Products>> _chil;
-  void getproMale(){
+  String username = '';
+  String avatarBase64 = '';
+  Uint8List? avatar;
+  void getproMale() {
     _male = Helper().getProductForMale();
   }
-  void getproFemale(){
+
+  void getproFemale() {
     _female = Helper().getProductForFemale();
   }
 
-  void getproChil(){
+  void getproChil() {
     _chil = Helper().getProductForChildre();
   }
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
     getproMale();
     getproFemale();
     getproChil();
+    _tabController.addListener(() {
+      setState(() {});
+    });
+    _loadUserData();
+
   }
+
+  Future<void> _loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      username = prefs.getString('username') ?? '';
+      String? avatarBase64 = prefs.getString('avatar');
+      if (avatarBase64 != null && avatarBase64.isNotEmpty) {
+        // Kiểm tra và loại bỏ tiền tố 'data:image/jpeg;base64,'
+        final regex = RegExp(r'data:image\/\w+;base64,');
+        avatarBase64 = avatarBase64.replaceAll(regex, '');
+
+        try {
+          avatar = base64Decode(avatarBase64);
+        } catch (e) {
+          print('Error decoding avatarBase64: $e');
+          avatar = null;
+        }
+      } else {
+        avatar = null;
+      }
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('<-----------Tại home_sreen người dùng đang sử dụng tên: $username--------->');
     return Scaffold(
-      backgroundColor: const Color(0xFFE2E2E),
+      backgroundColor: const Color(0xEFEEEE),
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 25),
               child: Container(
                 color: Colors.white,
-                padding: const EdgeInsets.fromLTRB(16, 5, 0, 0),
-                height: MediaQuery.of(context).size.height * 0.17,
-                child: const Row(
+                padding: const EdgeInsets.fromLTRB(16, 20, 0, 0),
+                height: MediaQuery.of(context).size.height * 0.16,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Row( children: [
+                    if (avatar != null)
                     Padding(
-                      padding: EdgeInsets.only(left: 6.0),
+                      padding: EdgeInsets.only(left: 10),
                       child: CircleAvatar(
                         radius: 20,
-                       backgroundImage: AssetImage("assets/images/user.png"),
+                        backgroundImage: MemoryImage(avatar!),
                       ),
                     ),
-                    SizedBox(
-                      width: 10,
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        Expanded(
+                          child: Text(
+                            username,
+                            style: const TextStyle(
+                                fontSize: 18, color: Colors.black,fontStyle:FontStyle.normal,
+                            fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ],
                     ),
-                    Expanded(
-                      child: Text(
-                        'Name',
-                        style: TextStyle(fontSize: 26, color: Colors.black),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(right: 6.0),
-                      child: Icon(Icons.settings, color: Colors.black),
+                    const SizedBox(height: 30),
+                    const Text(
+                      'Tùy chọn',
+                      style: TextStyle(fontSize: 23, color: Colors.black,
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.w600),
                     ),
                   ],
                 ),
@@ -86,10 +129,10 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
             Padding(
               padding: EdgeInsets.only(
                 top: MediaQuery.of(context).padding.top +
-                    MediaQuery.of(context).size.height * 0.15,
+                    MediaQuery.of(context).size.height * 0.13,
               ),
               child: Container(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.fromLTRB(1, 5, 10, 2),
                 color: Colors.white,
                 child: TabBar(
                   padding: EdgeInsets.zero,
@@ -97,17 +140,28 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   indicatorColor: Colors.transparent,
                   controller: _tabController,
                   isScrollable: true,
-                  labelColor: Colors.black,
-                  labelStyle: appstyle(28, Colors.black, FontWeight.bold),
-                  unselectedLabelColor: Colors.black.withOpacity(0.3),
-                  tabs: const [
+                  labelColor: Colors.white,
+                  labelStyle: appstyle(17, Colors.black, FontWeight.bold),
+                  unselectedLabelColor: Colors.black,
+                  tabs: [
                     Tab(
-                      text: 'Nam giới',
+                      child: CustomTab(
+                        text: 'Nam giới',
+                        isSelected: _tabController.index == 0,
+                      ),
                     ),
                     Tab(
-                      text: 'Nữ giới',
+                      child: CustomTab(
+                        text: 'Nữ giới',
+                        isSelected: _tabController.index == 1,
+                      ),
                     ),
-                    Tab(text: 'Trẻ em')
+                    Tab(
+                      child: CustomTab(
+                        text: 'Trẻ em',
+                        isSelected: _tabController.index == 2,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -115,17 +169,16 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
             Padding(
               padding: EdgeInsets.only(
                 top: MediaQuery.of(context).padding.top +
-                    MediaQuery.of(context).size.height * 0.21,
+                    MediaQuery.of(context).size.height * 0.175,
               ),
               child: Container(
-                padding: const EdgeInsets.only(left: 12,top:10),
+                padding: const EdgeInsets.only(left: 5),
                 child: TabBarView(
                   controller: _tabController,
                   children: [
                     HomeWidget(male: _male),
                     HomeWidget(male: _female),
                     HomeWidget(male: _chil),
-
                   ],
                 ),
               ),
@@ -136,4 +189,3 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 }
-

@@ -22,7 +22,7 @@ class HomeWidget extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          height: MediaQuery.of(context).size.height * 0.40,
+          height: MediaQuery.of(context).size.height * 0.33,
           child:FutureBuilder<List<Products>>(
             future: _male,
             builder: (context,snapshoot){
@@ -71,7 +71,7 @@ class HomeWidget extends StatelessWidget {
           children: [
             Padding(
               padding:
-              const EdgeInsets.fromLTRB(12, 20, 12, 20),
+              const EdgeInsets.fromLTRB(12, 15, 12,5),
               child: Row(
                 mainAxisAlignment:
                 MainAxisAlignment.spaceBetween,
@@ -79,18 +79,19 @@ class HomeWidget extends StatelessWidget {
                   Text(
                     "Sản phẩm mới",
                     style: appstyle(
-                        19, Colors.black, FontWeight.bold),
+                        17, Colors.black, FontWeight.bold),
                   ),
                   Row(
                     children: [
                       Text(
                         "Xem thêm",
                         style: appstyle(
-                            19, Colors.black, FontWeight.w500),
+                            15, Colors.blue.shade500, FontWeight.w500),
                       ),
                       const Icon(
                         AntDesign.caretright,
-                        size: 20,
+                        size: 15,
+                        color: Colors.blue,
                       ),
                     ],
                   ),
@@ -100,7 +101,7 @@ class HomeWidget extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height * 0.15,
+          height: MediaQuery.of(context).size.height * 0.28,
           child: FutureBuilder<List<Products>>(
             future: _male,
             builder: (context,snapshoot){
@@ -118,7 +119,7 @@ class HomeWidget extends StatelessWidget {
                   itemBuilder:(context,index){
                     final product = snapshoot.data![index];
                     return Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: NewProducts(imgData: product.imageData),
                     );
                   },

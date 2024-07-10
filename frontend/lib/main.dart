@@ -1,9 +1,10 @@
 import 'package:clothes_app/controllers/login.dart';
 import 'package:clothes_app/controllers/mainscreen.dart';
 import 'package:clothes_app/controllers/product.dart';
+import 'package:clothes_app/controllers/user_provider.dart';
+import 'package:clothes_app/view/ui/loginpage.dart';
 import 'package:clothes_app/view/ui/mainscreen.dart';
-import 'package:clothes_app/view/ui/profilepage.dart';
-import 'package:clothes_app/view/ui/unauthenticated/guest_profile.dart';
+import 'package:clothes_app/view/ui/updateProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +15,7 @@ void main() {
       ChangeNotifierProvider(create: (context) => MainScreenNotifier()),
       ChangeNotifierProvider(create: (context) => ProductNotifier()),
       ChangeNotifierProvider(create: (context) => LoginNotifier()),
+      ChangeNotifierProvider(create: (context)=> UserProvider()),
   ],
   child: const MyApp()));
 }
@@ -35,7 +37,7 @@ class MyApp extends StatelessWidget{
             ),
 
             // sets the homescreen of the app
-            home:const ProfilePage(),
+            home: MainScreen(),
           );
         }
     );
