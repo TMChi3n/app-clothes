@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Payment } from './etities/payment.entity';
+import { Payment } from './entities/payment.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Order } from '../order/entities/order.entity';
