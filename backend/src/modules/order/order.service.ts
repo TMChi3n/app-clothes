@@ -7,7 +7,7 @@ import { CartService } from '../cart/cart.service';
 import { Cart } from '../cart/entities/cart.entity';
 import { CartItem } from '../cart/cart-item/entities/cart-item.entity';
 import { ProductService } from '../product/product.service';
-import { Payment } from '../payment/etities/payment.entity';
+import { Payment } from '../payment/entities/payment.entity';
 import { User } from '../user/entities/user.entity';
 import { UserService } from '../user/user.service';
 

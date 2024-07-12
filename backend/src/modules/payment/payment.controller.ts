@@ -1,5 +1,5 @@
 import { Controller, Post, Body, Param, Get, Patch, Delete, NotFoundException, BadRequestException } from '@nestjs/common';
-import { Payment } from './etities/payment.entity';
+import { Payment } from './entities/payment.entity';
 import { PaymentService } from './payment.service';
 
 @Controller('api/v1/payment')
