@@ -87,11 +87,17 @@ export class OrderService {
     return order;
   }
   async getOrder(orderId: number) {
-    return this.orderRepo.findOne({ where: {id_order: orderId}});
+    return this.orderRepo.findOne({ 
+      where: {id_order: orderId},
+      relations:['orderItems'],
+    });
   }
 
   async getOrdersByUser(userId: number) {
-    return this.orderRepo.find({ where: { id_user: userId } });
+    return this.orderRepo.find({
+      where: { id_user: userId },
+      relations: ['orderItems'],
+    });
   }
 
   async updateOrderStatus(orderId: number, status: string) {
