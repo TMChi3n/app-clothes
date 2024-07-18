@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import { Controller, Post, Body, Param, Get, Patch, Delete, NotFoundException, BadRequestException, UseGuards } from '@nestjs/common';
 import { Payment } from './etities/payment.entity';
+=======
+import { Controller, Post, Body, Param, Get, Patch, Delete, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Payment } from './entities/payment.entity';
+>>>>>>> Chien
 import { PaymentService } from './payment.service';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 

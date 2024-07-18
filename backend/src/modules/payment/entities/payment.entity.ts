@@ -1,4 +1,10 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Order } from 'src/modules/order/entities/order.entity';
 
 @Entity()
@@ -23,7 +29,7 @@ export class Payment {
 
   @Column({
     type: 'enum',
-    enum: ['pending', 'completed', 'fail', 'cancelled']
+    enum: ['pending', 'completed', 'fail', 'cancelled'],
   })
   status: string;
 

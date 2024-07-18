@@ -10,7 +10,7 @@ import { CartItem } from './modules/cart/cart-item/entities/cart-item.entity';
 import { CartModule } from './modules/cart/cart.module';
 import { Order } from './modules/order/entities/order.entity';
 import { OrderItem } from './modules/order/order-item/entities/order-item.entity';
-import { Payment } from './modules/payment/etities/payment.entity';
+import { Payment } from './modules/payment/entities/payment.entity';
 import { OrderModule } from './modules/order/order.module';
 import { Favorite } from './modules/favorite/entities/favorite.entity';
 import { FavoriteModule } from './modules/favorite/favorite.module';
@@ -28,7 +28,16 @@ import { PaymentModule } from './modules/payment/payment.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
       synchronize: true,
-      entities: [Product, User, Cart, CartItem, Order, OrderItem, Payment, Favorite],
+      entities: [
+        Product,
+        User,
+        Cart,
+        CartItem,
+        Order,
+        OrderItem,
+        Payment,
+        Favorite,
+      ],
     }),
     ProductModule,
     AuthModule,
@@ -36,7 +45,7 @@ import { PaymentModule } from './modules/payment/payment.module';
     OrderModule,
     FavoriteModule,
     UserModule,
-    PaymentModule
+    PaymentModule,
   ],
 })
 export class AppModule {}
