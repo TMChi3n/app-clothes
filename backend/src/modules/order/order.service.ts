@@ -26,11 +26,13 @@ export class OrderService {
   async createOrderFromCart(userId: number, paymentMethod: 'cash' | 'banking') {
     // Lấy giỏ hàng từ dịch vụ giỏ hàng
     const cart: Cart = await this.cartService.getCart(userId);
-    console.log('Cart retrieved:', cart);
-
-    // Kiểm tra nếu giỏ hàng rỗng
     if (!cart || !cart.cartItems || cart.cartItems.length === 0) {
       throw new Error('Cart is empty');
+    }
+    //Chọn item từ giỏ hàng
+    const selectedItems = await this.cartService.getSelectedCartItems(userId);
+    if (!selectedItems || selectedItems.length === 0) {
+      throw new Error('No items selected');
     }
 
     // Lấy dữ liệu từ user
@@ -51,7 +53,7 @@ export class OrderService {
 
     // Tạo các mục đơn hàng từ các mục trong giỏ hàng
     const orderItems: OrderItem[] = [];
-    for (const cartItem of cart.cartItems) {
+    for (const cartItem of selectedItems) {
       // Lấy thông tin sản phẩm từ bảng product
       const product = await this.productService.findProductById(cartItem.id_product);
       if (!product) {
@@ -81,8 +83,8 @@ export class OrderService {
        payment_method: paymentMethod, 
      }); 
 
-    // Xóa giỏ hàng sau khi đã tạo đơn hàng thành công
-    await this.cartService.clearCart(userId);
+     // Xóa các item đã chọn từ giỏ hàng
+    await this.cartService.removeSelectedCartItems(userId);
 
     return order;
   }

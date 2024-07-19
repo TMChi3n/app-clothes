@@ -77,4 +77,37 @@ export class CartService {
       await this.cartItemRepo.delete({ id_cart: cart.id_cart });
     }
   }
+
+  async updateCartItemSelection(cartItemId: number, isSelected: boolean) {
+    const cartItem = await this.cartItemRepo.findOne({
+      where: { id_cart_detail: cartItemId },
+    });
+    if (cartItem) {
+      cartItem.isSelected = isSelected;
+      return this.cartItemRepo.save(cartItem);
+    }
+    throw new Error('Cart item not found');
+  }
+
+  async getSelectedCartItems(userId: number) {
+    const cart = await this.cartRepo.findOne({
+      where: { id_user: userId },
+      relations: ['cartItems'],
+    });
+    if (cart) {
+      return cart.cartItems.filter(item => item.isSelected);
+    }
+    return [];
+  }
+
+  async removeSelectedCartItems(userId: number) {
+    const cart = await this.getCart(userId);
+    if (cart) {
+      // Xóa tất cả các item đã chọn từ giỏ hàng
+      await this.cartItemRepo.delete({
+        id_cart: cart.id_cart,
+        isSelected: true,
+      });
+    }
+  }
 }

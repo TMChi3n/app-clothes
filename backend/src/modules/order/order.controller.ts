@@ -25,14 +25,14 @@ export class OrderController {
   ) {}
 
   @Post('create')
-  async createOrder(@Body() body) {
-    const { userId, paymentMethod } = body;
-    console.log(
-      'Creating order for user:',
-      userId,
-      'with payment method:',
-      paymentMethod,
-    );
+  async createOrder(@Request() req, @Body() body) {
+    console.log('Request user:', req.user);
+    const userId = req.user?.id_user;
+    const { paymentMethod } = body;
+    console.log('Creating order for user:', userId, 'with payment method:', paymentMethod,);
+    if (!userId) {
+      throw new Error('User ID is missing');
+    }
     return this.orderService.createOrderFromCart(userId, paymentMethod);
   }
 
