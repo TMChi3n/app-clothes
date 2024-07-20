@@ -47,7 +47,7 @@ export class OrderController {
   }
 
   @Patch(':id/status')
-  @UseGuards(JwtAuthGuard, RoleGuard) 
+  @UseGuards(JwtAuthGuard, RoleGuard)
   @Role('admin')
   async updateOrderStatus(
     @Param('id') id: number,
