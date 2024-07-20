@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Spin, Alert, Select } from "antd";
+import { Table, Spin, Alert, Select, message } from "antd";
 import { getAllOrders, updateOrderStatus } from "../../apis/apisRequest";
 import { useSelector } from "react-redux";
 
@@ -37,10 +37,9 @@ const OrdersList = () => {
           order.id_order === id_order ? { ...order, status } : order
         )
       );
-      console.log(`Successfully updated order ${id_order} to status ${status}`);
+      message.success(`Successfully updated order ${id_order} to status ${status}`);
     } catch (err) {
-      console.error("Error updating status", err);
-      setError(err);
+      message.error("Failed to update order");
     }
   };
 
