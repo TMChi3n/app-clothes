@@ -1,0 +1,19 @@
+.inp-new-password {
+    margin-left: 24px;
+
+}
+
+.inp-email {
+    margin-left: 82px;
+}
+
+.btn-submit:hover {
+    cursor: pointer;
+    background-color: red;
+}
+
+.btn-submit {
+    border: 1px black solid;
+    border-radius: 4px;
+    background-color: white;
+}

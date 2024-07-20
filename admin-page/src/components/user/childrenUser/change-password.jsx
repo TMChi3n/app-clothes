@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { resetPassword } from "../../../apis/apisRequest.jsx";
+import { resetPassword } from "../../../apis/apisRequest.jsx"; 
+import "./index.css";
 
 const ChangePassword = () => {
   const [email, setEmail] = useState("");
@@ -53,6 +54,7 @@ const ChangePassword = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            class="inp-email"
           />
         </div>
         <div>
@@ -62,6 +64,7 @@ const ChangePassword = () => {
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             required
+            class="inp-new-password"
           />
         </div>
         <div>
@@ -71,6 +74,7 @@ const ChangePassword = () => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
+            class="inp-confirm-password"
           />
         </div>
         <button type="submit">Reset Password</button>
