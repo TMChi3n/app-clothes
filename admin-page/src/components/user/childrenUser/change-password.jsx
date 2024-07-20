@@ -36,7 +36,6 @@ const ChangePassword = () => {
     try {
       const response = await resetPassword(token, resetPasswordData);
       setMessage(response.message);
-      navigate("/login"); // Redirect to login page after successful reset
     } catch (error) {
       console.error("Error resetting password:", error);
       setMessage("Failed to reset password. Please try again.");
