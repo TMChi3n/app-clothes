@@ -91,14 +91,14 @@ export class OrderService {
   async getOrder(orderId: number) {
     return this.orderRepo.findOne({ 
       where: {id_order: orderId},
-      relations:['orderItems'],
+      relations:['orderItems', 'payments'],
     });
   }
 
   async getOrdersByUser(userId: number) {
     return this.orderRepo.find({
       where: { id_user: userId },
-      relations: ['orderItems'],
+      relations: ['orderItems', 'payments'],
     });
   }
 
@@ -133,7 +133,7 @@ export class OrderService {
   async calculateTotalAmount(orderId: number): Promise<number> {
     const order = await this.orderRepo.findOne({
       where: { id_order: orderId },
-      relations: ['orderItems'], 
+      relations: ['orderItems', 'payments'], 
     });
 
     if (!order) {
@@ -150,7 +150,7 @@ export class OrderService {
   }
 
   async getAllOrders(startDate?: Date, endDate?: Date, status?: string): Promise<Order[]> {
-    const queryBuilder = this.orderRepo.createQueryBuilder('order').leftJoinAndSelect('order.orderItems', 'orderItems')
+    const queryBuilder = this.orderRepo.createQueryBuilder('order').leftJoinAndSelect('order.orderItems', 'orderItems').leftJoinAndSelect('order.payments', 'payments');
 
     if (startDate) {
       queryBuilder.andWhere('order.order_date >= :startDate', { startDate });
