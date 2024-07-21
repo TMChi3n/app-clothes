@@ -1,11 +1,5 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import { Order } from 'src/modules/order/entities/order.entity';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Order } from 'src/modules/order/entities/order.entity'
 import { Product } from 'src/modules/product/entities/product.entity';
 
 @Entity()
@@ -22,7 +16,7 @@ export class OrderItem {
   @Column()
   quantity: number;
 
-  @Column({ nullable: true })
+  @Column({nullable: true})
   price: number;
 
   @Column({nullable: true}) 

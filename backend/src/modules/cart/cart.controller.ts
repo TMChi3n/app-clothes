@@ -23,10 +23,10 @@ export class CartController {
   }
 
   @Post('add')
-  async addToCart(@Request() req, @Body() body) {
-    const { productId, quantity } = body;
-    return this.cartService.addToCart(req.user.userId, productId, quantity);
-  }  
+  async addToCart(@Body() body) {
+    const { userId, productId, quantity } = body;
+    return this.cartService.addToCart(userId, productId, quantity);
+  }
 
   @UseGuards(JwtAuthGuard)
   @Delete('remove/:id')
@@ -53,18 +53,5 @@ export class CartController {
   async clearCart(@Request() req) {
     await this.cartService.clearCart(req.user.userId);
     return { message: 'Cart cleared successfully' };
-  }
-
-  @Patch('select/:id')
-  async updateCartItemSelection(@Param('id') id: string, @Body() body) {
-    const { isSelected } = body;
-    const updatedCartItem = await this.cartService.updateCartItemSelection(+id, isSelected);
-    return { cartItem: updatedCartItem };
-  }
-
-  @Delete('clear-selected')
-  async clearSelectedCartItems(@Request() req) {
-    await this.cartService.removeSelectedCartItems(req.user.userId);
-    return { message: 'Selected items removed successfully' };
   }
 }

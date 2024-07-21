@@ -26,13 +26,11 @@ export class OrderService {
   async createOrderFromCart(userId: number, paymentMethod: 'cash' | 'banking') {
     // Lấy giỏ hàng từ dịch vụ giỏ hàng
     const cart: Cart = await this.cartService.getCart(userId);
+    console.log('Cart retrieved:', cart);
+
+    // Kiểm tra nếu giỏ hàng rỗng
     if (!cart || !cart.cartItems || cart.cartItems.length === 0) {
       throw new Error('Cart is empty');
-    }
-    //Chọn item từ giỏ hàng
-    const selectedItems = await this.cartService.getSelectedCartItems(userId);
-    if (!selectedItems || selectedItems.length === 0) {
-      throw new Error('No items selected');
     }
 
     // Lấy dữ liệu từ user
@@ -53,7 +51,7 @@ export class OrderService {
 
     // Tạo các mục đơn hàng từ các mục trong giỏ hàng
     const orderItems: OrderItem[] = [];
-    for (const cartItem of selectedItems) {
+    for (const cartItem of cart.cartItems) {
       // Lấy thông tin sản phẩm từ bảng product
       const product = await this.productService.findProductById(cartItem.id_product);
       if (!product) {
@@ -83,23 +81,17 @@ export class OrderService {
        payment_method: paymentMethod, 
      }); 
 
-     // Xóa các item đã chọn từ giỏ hàng
-    await this.cartService.removeSelectedCartItems(userId);
+    // Xóa giỏ hàng sau khi đã tạo đơn hàng thành công
+    await this.cartService.clearCart(userId);
 
     return order;
   }
   async getOrder(orderId: number) {
-    return this.orderRepo.findOne({ 
-      where: {id_order: orderId},
-      relations:['orderItems', 'payments'],
-    });
+    return this.orderRepo.findOne({ where: {id_order: orderId}});
   }
 
   async getOrdersByUser(userId: number) {
-    return this.orderRepo.find({
-      where: { id_user: userId },
-      relations: ['orderItems', 'payments'],
-    });
+    return this.orderRepo.find({ where: { id_user: userId } });
   }
 
   async updateOrderStatus(orderId: number, status: string) {
@@ -133,7 +125,7 @@ export class OrderService {
   async calculateTotalAmount(orderId: number): Promise<number> {
     const order = await this.orderRepo.findOne({
       where: { id_order: orderId },
-      relations: ['orderItems', 'payments'], 
+      relations: ['orderItems'], 
     });
 
     if (!order) {
@@ -150,7 +142,7 @@ export class OrderService {
   }
 
   async getAllOrders(startDate?: Date, endDate?: Date, status?: string): Promise<Order[]> {
-    const queryBuilder = this.orderRepo.createQueryBuilder('order').leftJoinAndSelect('order.orderItems', 'orderItems').leftJoinAndSelect('order.payments', 'payments');
+    const queryBuilder = this.orderRepo.createQueryBuilder('order').leftJoinAndSelect('order.orderItems', 'orderItems')
 
     if (startDate) {
       queryBuilder.andWhere('order.order_date >= :startDate', { startDate });

@@ -1,11 +1,4 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from 'src/modules/user/entities/user.entity';
 import { OrderItem } from '../order-item/entities/order-item.entity';
 import { Payment } from 'src/modules/payment/entities/payment.entity';
@@ -36,6 +29,6 @@ export class Order {
   @OneToMany(() => OrderItem, (orderItem) => orderItem.order)
   orderItems: OrderItem[];
 
-  @OneToMany(() => Payment, (payment) => payment.order)
+  @OneToMany(() => Payment, (payment) => payment.order)  
   payments: Payment[];
 }

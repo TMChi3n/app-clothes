@@ -8,31 +8,24 @@ import {
   Patch,
   Request,
   Delete,
-  Query,
+  Query
 } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 import { PaymentService } from '../payment/payment.service';
-import { RoleGuard } from 'src/common/guards/role-auth.guard';
-import { Role } from 'src/common/decorators/role';
 
 @Controller('api/v1/order')
 @UseGuards(JwtAuthGuard)
 export class OrderController {
   constructor(
     private orderService: OrderService,
-    private paymentService: PaymentService,
+    private paymentService: PaymentService
   ) {}
 
   @Post('create')
-  async createOrder(@Request() req, @Body() body) {
-    console.log('Request user:', req.user);
-    const userId = req.user?.id_user;
-    const { paymentMethod } = body;
-    console.log('Creating order for user:', userId, 'with payment method:', paymentMethod,);
-    if (!userId) {
-      throw new Error('User ID is missing');
-    }
+  async createOrder(@Body() body) {
+    const { userId, paymentMethod } = body;
+    console.log('Creating order for user:', userId, 'with payment method:', paymentMethod);
     return this.orderService.createOrderFromCart(userId, paymentMethod);
   }
 
@@ -47,8 +40,6 @@ export class OrderController {
   }
 
   @Patch(':id/status')
-  @UseGuards(JwtAuthGuard, RoleGuard)
-  @Role('admin')
   async updateOrderStatus(
     @Param('id') id: number,
     @Body('status') status: string,
@@ -79,10 +70,6 @@ export class OrderController {
   ) {
     const parsedStartDate = startDate ? new Date(startDate) : undefined;
     const parsedEndDate = endDate ? new Date(endDate) : undefined;
-    return this.orderService.getAllOrders(
-      parsedStartDate,
-      parsedEndDate,
-      status,
-    );
+    return this.orderService.getAllOrders(parsedStartDate, parsedEndDate, status);
   }
 }
