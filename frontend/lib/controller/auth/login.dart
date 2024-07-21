@@ -1,5 +1,6 @@
 import 'package:clothes_app/models/auth/login/login_request.dart';
-import 'package:clothes_app/services/authServices.dart';
+import 'package:clothes_app/models/auth/signup/signup_data.dart';
+import 'package:clothes_app/services/user/auth/authServices.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -45,9 +46,10 @@ class LoginNotifier extends ChangeNotifier{
   //
   Future<bool> userLogin(LoginModel model) async {
     final SharedPreferences sharedpre = await SharedPreferences.getInstance();
-    processing = false;
+    processing = true;
 
     bool response = await AuthServices().login(model);
+    processing = false;
     login = response;
     logged = sharedpre.getBool('Logged') ?? false;
     return login;
@@ -61,6 +63,15 @@ class LoginNotifier extends ChangeNotifier{
     sharedpre.remove('email');
     sharedpre.remove('role');
     sharedpre.remove('Logged');
+    sharedpre.remove('user_id');
+    sharedpre.remove('avatar');
     logged = sharedpre.getBool('Logged') ?? false;
+  }
+
+  // đăng ký
+  Future<bool> signUp(SignUpModel model ) async{
+    responseBool = await AuthServices().signup(model);
+    print('Phản hồi đăng ký,tại file LoginNotifier: $responseBool'); // In ra giá trị của responseBool
+    return responseBool;
   }
 }

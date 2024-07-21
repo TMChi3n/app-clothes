@@ -1,10 +1,10 @@
-import 'package:clothes_app/controllers/product.dart';
+import 'package:clothes_app/controller/product.dart';
 import 'package:clothes_app/view/ui/productpage.dart';
 import 'package:clothes_app/view/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
-import '../../models/auth/product/products.dart';
+import '../../models/product/products.dart';
 import 'appstyle.dart';
 import 'newproducts.dart';
 
@@ -22,7 +22,7 @@ class HomeWidget extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          height: MediaQuery.of(context).size.height * 0.40,
+          height: MediaQuery.of(context).size.height * 0.36,
           child:FutureBuilder<List<Products>>(
             future: _male,
             builder: (context,snapshoot){
@@ -43,21 +43,22 @@ class HomeWidget extends StatelessWidget {
                     final product = snapshoot.data![index];
                     return GestureDetector(
                       onTap:(){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>Productpage(
-                                  id: product.id_product,
-                                  type: product.type)
-                          )
-                      );
-                    },
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>Productpage(
+                                    id: product.id_product,
+                                    type: product.type)
+                            )
+                        );
+                      },
                       child: ProductCard(
                         name: product.name,
                         id_product: product.id_product,
                         type: product.type,
                         price:product.price,
                         imgData: product.imageData,
+                        overview: product.overview,
                       ),
 
                     );
@@ -71,7 +72,7 @@ class HomeWidget extends StatelessWidget {
           children: [
             Padding(
               padding:
-              const EdgeInsets.fromLTRB(12, 20, 12, 20),
+              const EdgeInsets.fromLTRB(12, 15, 12,5),
               child: Row(
                 mainAxisAlignment:
                 MainAxisAlignment.spaceBetween,
@@ -79,18 +80,19 @@ class HomeWidget extends StatelessWidget {
                   Text(
                     "Sản phẩm mới",
                     style: appstyle(
-                        19, Colors.black, FontWeight.bold),
+                        17, Colors.black, FontWeight.bold),
                   ),
                   Row(
                     children: [
                       Text(
                         "Xem thêm",
                         style: appstyle(
-                            19, Colors.black, FontWeight.w500),
+                            15, Colors.blue.shade500, FontWeight.w500),
                       ),
                       const Icon(
                         AntDesign.caretright,
-                        size: 20,
+                        size: 15,
+                        color: Colors.blue,
                       ),
                     ],
                   ),
@@ -100,7 +102,7 @@ class HomeWidget extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height * 0.15,
+          height: MediaQuery.of(context).size.height * 0.28,
           child: FutureBuilder<List<Products>>(
             future: _male,
             builder: (context,snapshoot){
@@ -118,7 +120,7 @@ class HomeWidget extends StatelessWidget {
                   itemBuilder:(context,index){
                     final product = snapshoot.data![index];
                     return Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: NewProducts(imgData: product.imageData),
                     );
                   },

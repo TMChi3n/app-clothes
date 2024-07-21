@@ -1,7 +1,9 @@
-import 'package:clothes_app/view/widgets/product_card.dart';
+import 'package:clothes_app/controller/favorite/favorites_notifier.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:clothes_app/controllers/favorite_notifier.dart';
+
+import '../widgets/favoritescard.dart';
 
 class FavoPage extends StatelessWidget {
   const FavoPage({Key? key}) : super(key: key);
@@ -9,7 +11,7 @@ class FavoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final favoriteNotifier =
-        Provider.of<FavoriteNotifier>(context, listen: false);
+    Provider.of<FavoriteNotifier>(context, listen: false);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       favoriteNotifier.fetchFavoriteProducts();
@@ -18,8 +20,8 @@ class FavoPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Favorite Products'),
-        centerTitle: true,
         leading: SizedBox.shrink(),
+        centerTitle: true,
       ),
       body: Consumer<FavoriteNotifier>(
         builder: (context, provider, _) {
@@ -30,7 +32,7 @@ class FavoPage extends StatelessWidget {
               child: Text(
                 provider.errorMessage,
                 style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             );
           } else if (provider.favoriteProducts.isEmpty) {
@@ -47,12 +49,13 @@ class FavoPage extends StatelessWidget {
                 final product = provider.favoriteProducts[index];
                 return SizedBox(
                   height: 350,
-                  child: ProductCard(
+                  child: ProductFavCard(
                     name: product.name,
                     id_product: product.id_product,
                     type: product.type,
                     price: product.price,
                     imgData: product.imageData,
+                    overview: product.overview,
                   ),
                 );
               },

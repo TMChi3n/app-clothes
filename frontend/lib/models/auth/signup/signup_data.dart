@@ -1,8 +1,6 @@
 import "dart:convert";
 
-import "package:flutter/foundation.dart";
 
-import "";
 
 class SignUpModel {
   final String username;

@@ -1,9 +1,10 @@
-import 'package:flutter/cupertino.dart';
+import 'package:clothes_app/models/auth/signup/signup_data.dart';
+import 'package:clothes_app/view/ui/loginpage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-import '../../controllers/login.dart';
+import '../../controller/auth/login.dart';
 import '../widgets/appstyle.dart';
 import '../widgets/reusable_text.dart';
 import '../widgets/textfield.dart';
@@ -19,9 +20,18 @@ class _RegistorState extends State<Registor>{
   TextEditingController password = TextEditingController();
   TextEditingController username = TextEditingController();
 
+  bool isValid = false;
+  void toConfirm(){
+    if(email.text.isNotEmpty&& password.text.isNotEmpty&&username.text.isNotEmpty){
+      isValid = true;
+    }
+    else{
+      isValid = false;
+    }
+  }
   @override
   Widget build(BuildContext context){
-    var auNotifi = Provider.of<LoginNotifier>(context);
+    var notifi = Provider.of<LoginNotifier>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -84,14 +94,14 @@ class _RegistorState extends State<Registor>{
               height: 10.h,
             ),
             CustomTextField(
-              obscureText: auNotifi.isObsecure,
+              obscureText: notifi.isObsecure,
               controller: password,
               hintText: "Password",
               suffixIcon: GestureDetector(
                 onTap:(){
-                  auNotifi.isObsecure = !auNotifi.isObsecure;
+                  notifi.isObsecure = !notifi.isObsecure;
                 },
-                child:auNotifi.isObsecure? Icon(Icons.visibility):Icon(Icons.visibility),
+                child:notifi.isObsecure? const Icon(Icons.visibility):const Icon(Icons.visibility),
 
               ),
               validator: (password){
@@ -125,7 +135,28 @@ class _RegistorState extends State<Registor>{
             ),
             GestureDetector(
               onTap: (){
+                toConfirm();
+                if(isValid){
+                  debugPrint('Chuẩn bị yêu cầu đăng kí');
+                  SignUpModel model = SignUpModel(
+                      username: username.text,
+                      email: email.text,
+                      password: password.text);
+                  notifi.signUp(model).then((response){
+                    if(response ==true){
+                      debugPrint("Đăng kí thành công tại signupPage !!!");
+                      Navigator.push(
+                          context, MaterialPageRoute(
+                          builder: (context) =>const LoginPage()));
+                    }else{
+                      debugPrint('Đăng kí thất bại');
+                    }
+                  });
 
+                }
+                else{
+                   debugPrint('Chưa thể yêu cầu đăng kí');
+                }
               },
               child: Container(
                 height: 55.h,

@@ -1,8 +1,10 @@
+
 import 'package:flutter/material.dart';
 import 'package:clothes_app/view/widgets/appstyle.dart';
 import 'package:clothes_app/view/widgets/product_card.dart';
 import 'package:provider/provider.dart';
-import 'package:clothes_app/controllers/search_notifer.dart';
+
+import '../../controller/search/search.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
@@ -58,6 +60,7 @@ class SearchPage extends StatelessWidget {
                     type: product.type,
                     price: product.price,
                     imgData: product.imageData,
+                    overview: product.overview,
                   ),
                 );
               },
