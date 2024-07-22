@@ -14,7 +14,6 @@ import { Product } from './entities/product.entity';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
-import { Role } from 'src/common/decorators/role';
 
 @Controller('api/v1/product')
 export class ProductController {
@@ -31,15 +30,12 @@ export class ProductController {
   }
 
   @Post('/create')
-  @Role('admin')
   @UseGuards(JwtAuthGuard)
   createProduct(@Body() createProductDto: CreateProductDto): Promise<Product> {
     return this.productService.addProduct(createProductDto);
   }
 
   @Put('/update/:id')
-  @UseGuards(JwtAuthGuard)
-  @Role('admin')
   updateProduct(
     @Param('id') id_product: number,
     @Body() updateProductDto: UpdateProductDto,
@@ -49,8 +45,6 @@ export class ProductController {
   }
 
   @Delete('/delete/:id')
-  @Role('admin')
-  @UseGuards(JwtAuthGuard)
   deleteProduct(@Param('id') id_product: number): Promise<void> {
     return this.productService.deleteProduct(id_product);
   }
