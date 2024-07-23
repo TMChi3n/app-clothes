@@ -11,11 +11,19 @@ export class CartService {
     private cartItemRepo: Repository<CartItem>,
   ) {}
 
-  async getCart(userId: number) {
-    return this.cartRepo.findOne({
+  async getCart(userId: number): Promise<Cart> {
+    const cart = await this.cartRepo.findOne({
       where: { id_user: userId },
       relations: ['cartItems'],
     });
+
+    if (!cart) {
+      throw new Error('Cart not found');
+    }
+
+    console.log(cart);
+
+    return cart;
   }
 
   async addToCart(userId: number, productId: number, quantity: number) {
@@ -71,10 +79,11 @@ export class CartService {
     throw new Error('Cart item not found');
   }
 
-  async clearCart(userId: number) {
+  async clearCart(userId: number): Promise<void> {
     const cart = await this.getCart(userId);
-    if (cart) {
-      await this.cartItemRepo.delete({ id_cart: cart.id_cart });
+    if (cart && cart.cartItems && cart.cartItems.length > 0) {
+      const cartItemIds = cart.cartItems.map((item) => item.id_cart_detail);
+      await this.cartItemRepo.delete(cartItemIds);
     }
   }
 }
