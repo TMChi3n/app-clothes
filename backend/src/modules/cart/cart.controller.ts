@@ -18,12 +18,7 @@ import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 export class CartController {
   constructor(private cartService: CartService) {}
 
-  @Get('get')
-  async getCartUser(@Request() req) {
-    return this.cartService.getCart(req.user.userId);
-  }
-
-  @Get('/:userId')
+  @Get('get/:userId')
   async getCart(@Param('userId') userId: number) {
     return this.cartService.getCart(userId);
   }
@@ -54,8 +49,6 @@ export class CartController {
     const updatedCartItem = await this.cartService.decreaseQuantity(+id);
     return { cartItem: updatedCartItem };
   }
-
-  // F
 
   @Delete('clear/:userId')
   async clearCart(
