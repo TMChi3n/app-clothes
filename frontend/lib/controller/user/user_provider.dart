@@ -11,10 +11,10 @@ class UserProvider extends ChangeNotifier{
   }
 
   Future<bool> GetProfile() async{
-  processing = true;
-  bool response = await UserServices().getProfile();
-  processing = false ;
-  return response;
+    processing = true;
+    bool response = await UserServices().getProfile();
+    processing = false ;
+    return response;
   }
   Future<bool> UpdateProfile(UpProReq model) async{
     processing = true;

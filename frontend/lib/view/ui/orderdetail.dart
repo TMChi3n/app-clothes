@@ -31,7 +31,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Order Details'),
+        title: const Text('Chi tiết đơn hàng'),
       ),
       body: Consumer<OrderNotifier>(
         builder: (context, orderNotifier, child) {
@@ -53,22 +53,22 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Order #${order.first.idOrder}',
+                  'Đơn hàng #${order.first.idOrder}',
                   style: const TextStyle(
                       fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10),
-                Text('Status: ${order.first.status}'),
+                Text('Trạng thái: ${order.first.status}'),
                 const SizedBox(height: 10),
-                Text('Order Date: ${dateFormat.format(order.first.orderDate)}'),
+                Text('Ngày đặt đơn hàng: ${dateFormat.format(order.first.orderDate)}'),
                 const SizedBox(height: 10),
-                Text('Address: ${order.first.orderItems.first.address}'),
+                Text('Địa chỉ: ${order.first.orderItems.first.address}'),
                 const SizedBox(height: 10),
                 Text(
-                    'Phone Number: ${order.first.orderItems.first.phoneNumber}'),
+                    'Số điện thoại: ${order.first.orderItems.first.phoneNumber}'),
                 const SizedBox(height: 20),
                 const Text(
-                  'Order Items:',
+                  'Đơn hàng:',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10),
@@ -83,8 +83,8 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Total Price: $totalPrice'),
-                    Text('Total Quantity: $totalQuantity'),
+                    Text('Tổng tiền: $totalPrice VND'),
+                    Text('Tổng số lượng: $totalQuantity'),
                   ],
                 ),
                 const SizedBox(height: 20),
@@ -114,8 +114,8 @@ class OrderItemTile extends StatelessWidget {
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Quantity: ...'),
-                  Text('Price: ...'),
+                  Text('Số lượng: ...'),
+                  Text('Giá: ...'),
                 ],
               ),
             );
@@ -125,8 +125,8 @@ class OrderItemTile extends StatelessWidget {
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Quantity: ${orderItem.quantity}'),
-                  Text('Price: ${orderItem.price}'),
+                  Text('Số lượng: ${orderItem.quantity}'),
+                  Text('Giá: ${orderItem.price}'),
                 ],
               ),
             );
@@ -152,8 +152,8 @@ class OrderItemTile extends StatelessWidget {
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Quantity: ${orderItem.quantity}'),
-                  Text('Price: ${orderItem.price}'),
+                  Text('Số lươngj: ${orderItem.quantity}'),
+                  Text('Giá: ${orderItem.price}'),
                 ],
               ),
             );

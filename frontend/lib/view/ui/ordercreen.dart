@@ -24,7 +24,7 @@ class _OrderScreenState extends State<OrderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Orders'),
+        title: const Text('Đơn hàng'),
       ),
       body: Consumer<OrderNotifier>(
         builder: (context, orderNotifier, child) {
@@ -34,7 +34,7 @@ class _OrderScreenState extends State<OrderScreen> {
 
           if (orderNotifier.userOrders == null ||
               orderNotifier.userOrders!.isEmpty) {
-            return const Center(child: Text('No orders found.'));
+            return const Center(child: Text('Không tìm thấy đơn hàng nào'));
           }
 
           return ListView.builder(
@@ -42,8 +42,8 @@ class _OrderScreenState extends State<OrderScreen> {
             itemBuilder: (context, index) {
               final order = orderNotifier.userOrders![index];
               return ListTile(
-                title: Text('Order #${order.idOrder}'),
-                subtitle: Text('Status: ${order.status}'),
+                title: Text('Đơn hàng #${order.idOrder}'),
+                subtitle: Text('Trạng thái: ${order.status}'),
                 onTap: () {
                   Navigator.push(
                     context,

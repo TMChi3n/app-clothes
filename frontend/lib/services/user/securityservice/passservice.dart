@@ -37,7 +37,7 @@ class PassService {
   Future<bool> changePassword(ChangePasswordRequest request) async {
     SharedPreferences shared = await SharedPreferences.getInstance();
     final token = shared.getString('access_token');
-    final userId = shared.getInt('user_id');
+    final userId = shared.getString('user_id');
     var url = Uri.http(Config.apiLocalhost, '${Config.changePassword}/$userId'); // Ensure the URL is correct
 
     try {

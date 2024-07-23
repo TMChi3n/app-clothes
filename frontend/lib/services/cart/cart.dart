@@ -10,13 +10,16 @@ class CartService {
   static Future<Map<String, dynamic>> getCart() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.getString('access_token') ?? '';
-
+    String? id_user = prefs.getString('user_id');
+    print('user_id : $id_user');
     var client = http.Client();
     try {
-      var url = Uri.http(Config.apiLocalhost, '${Config.getCart}/get');
+      var url = Uri.http(Config.apiLocalhost, '${Config.getCart}/${id_user}');
       var response = await client.get(
         url,
-        headers: {'Authorization': 'Bearer $token'},
+        headers: { 'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token'
+          },
       );
 
       if (response.statusCode == 200) {
@@ -39,7 +42,7 @@ class CartService {
 
     var client = http.Client();
     try {
-      var url = Uri.http(Config.apiLocalhost, '${Config.getCart}/add');
+      var url = Uri.http(Config.apiLocalhost, '${Config.addCart}');
       var response = await client.post(
         url,
         headers: {
@@ -92,7 +95,6 @@ class CartService {
         url,
         headers: {'Authorization': 'Bearer $token'},
       );
-
       if (response.statusCode != 200) {
         throw Exception('Failed to increase quantity');
       }

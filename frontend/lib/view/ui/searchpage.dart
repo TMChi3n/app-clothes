@@ -23,7 +23,7 @@ class SearchPage extends StatelessWidget {
         title: TextField(
           onChanged: (value) => searchNotifier.searchProducts(value),
           decoration: const InputDecoration(
-            hintText: 'Search for products...',
+            hintText: 'Tìm kiếm...',
             border: InputBorder.none,
           ),
         ),
@@ -43,7 +43,7 @@ class SearchPage extends StatelessWidget {
           } else if (provider.products.isEmpty) {
             return Center(
               child: Text(
-                'No products found',
+                'Không tìm thấy',
                 style: appstyle(20, Colors.black, FontWeight.bold),
               ),
             );

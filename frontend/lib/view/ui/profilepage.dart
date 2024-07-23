@@ -40,8 +40,8 @@ class ProfilePageState extends State<ProfilePage> {
     SharedPreferences shared = await SharedPreferences.getInstance();
     setState(() {
       username = shared.getString('username') ?? '';
-      birthday = shared.getString('birthday') ?? '06/10/2003';
-      gender = shared.getString('gender') ?? 'nam';
+      birthday = shared.getString('birthday') ?? '';
+      gender = shared.getString('gender') ?? '';
       phoneNumber = shared.getInt('phone_number') ?? 000;
       address = shared.getString('address') ?? '';
     });

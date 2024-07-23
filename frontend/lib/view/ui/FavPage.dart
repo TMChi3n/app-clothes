@@ -1,6 +1,7 @@
 import 'package:clothes_app/controller/favorite/favorites_notifier.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/favoritescard.dart';
@@ -19,7 +20,10 @@ class FavoPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Favorite Products'),
+        backgroundColor: Colors.lightBlue,
+        elevation: 0,
+        toolbarHeight: 20.h,
+        title: const Text('Yêu thích'),
         leading: SizedBox.shrink(),
         centerTitle: true,
       ),
@@ -38,7 +42,7 @@ class FavoPage extends StatelessWidget {
           } else if (provider.favoriteProducts.isEmpty) {
             return const Center(
               child: Text(
-                'No favorite products found',
+                'Không có sản phẩm yêu thích',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             );

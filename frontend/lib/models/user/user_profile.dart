@@ -16,19 +16,19 @@ class UserProfile {
   });
 
   factory UserProfile.fromJson(Map<String, dynamic> json)  => UserProfile (
-      username: json['username'] ?? 'Chưa điền',
-      address: json['address'] ?? 'Chưa điền',
-      gender: json['gender'] ?? 'Chưa điền',
-      birthday: json['birthday'] != null
-          ? _formatDate(json['birthday'])
-          : '06/10/2003',
-      phoneNumber: json['phone_number'] ?? 0,
-    );
+    username: json['username'] ?? 'Chưa điền',
+    address: json['address'] ?? 'Chưa điền',
+    gender: json['gender'] ?? '',
+    birthday: json['birthday'] != null
+        ? _formatDate(json['birthday'])
+        : ' ',
+    phoneNumber: json['phone_number'] ?? 0,
+  );
 
   static String _formatDate(String? dateInput) {
     if (dateInput == null) {
       // Handle null case or invalid date format
-      return '06/10/2003'; // Default value or appropriate fallback
+      return ' '; // Default value or appropriate fallback
     }
     // Format date as needed
     DateTime? date = DateTime.tryParse(dateInput);

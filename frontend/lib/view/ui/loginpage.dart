@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
           padding: EdgeInsets.zero,
           children: [
             ReusableText(
-                text: "Xin chào!",
+                text: "Đăng nhập!",
                 style: appstyle(33, Colors.black, FontWeight.w600)),
             SizedBox(
               height: 70.h,

@@ -7,8 +7,10 @@ class Config {
   static const String updateProfileUser = '/api/v1/auth/update-profile/';
   static const String getProfileUser = '/api/v1/auth/profile/';
   static const String getOderByUser = '/api/v1/order/user/';
-  static const String forgotPassword= '/api/v1/auth/forgot-password';
+  static const String forgotPassword = '/api/v1/auth/forgot-password';
   static const String changePassword = '/api/v1/auth/change-password';
-  static const String getCart = '/api/v1/cart';
+  static const String getCart = '/api/v1/cart/get';
   static const String getFavorite = '/api/v1/favorite/user';
+  static const String clearCart = '';
+  static const String addCart = '/api/v1/cart/add';
 }

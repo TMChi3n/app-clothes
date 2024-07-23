@@ -11,7 +11,7 @@ class UserServices {
 
   Future<bool> updateProfile(UpProReq updatemodel) async {
     SharedPreferences shared = await SharedPreferences.getInstance();
-    final userId = shared.getInt('user_id');
+    final userId = shared.getString('user_id');
     final accessToken = shared.getString('access_token');
     Map<String, String> requestHeader = {
       'Content-Type': 'application/json',
@@ -46,7 +46,8 @@ class UserServices {
   Future<bool> getProfile() async {
     final SharedPreferences shared = await SharedPreferences.getInstance();
     final accessToken = shared.getString('access_token');
-    final userId = shared.getInt('user_id');
+    final userId = shared.getString('user_id');
+
 
     // In ra các biến trước khi gán
     print('Access Token: $accessToken');
@@ -64,13 +65,13 @@ class UserServices {
       if (response.statusCode == 200) {
         var jsonResponse = jsonDecode(response.body);
         UserProfile profile = UserProfile.fromJson(jsonResponse);
-
+         print("ressponse :$jsonResponse");
         // Kiểm tra và xử lý các trường hợp thiếu dữ liệu
         String username = profile.username ?? 'Tên';
-        String birthday = profile.birthday ?? '06/10/2003';
+        String birthday = profile.birthday ?? '';
         int phoneNumber = profile.phoneNumber ?? 0;
-        String gender = profile.gender ?? 'Giới tính';
-        String address = profile.address ?? 'Địa chỉ';
+        String gender = profile.gender ?? '';
+        String address = profile.address ?? '';
 
         // In ra các giá trị trước khi lưu vào SharedPreferences
         print('Username: $username');
