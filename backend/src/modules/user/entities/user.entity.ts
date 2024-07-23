@@ -33,8 +33,13 @@ export class User {
   @Column({ nullable: true })
   address: string;
 
-  @Column({ type: 'enum', enum: ['male', 'female'], nullable: true })
-  gender: 'male' | 'female';
+  @Column({
+    type: 'enum',
+    enum: ['male', 'female', 'empty'],
+    default: 'empty',
+    nullable: true,
+  })
+  gender: 'male' | 'female' | 'empty';
 
   @Column({ nullable: true, type: 'date' })
   birthday: Date;
@@ -52,6 +57,14 @@ export class User {
   favorites: Favorite[];
 
   get genderInVietnamese(): string {
-    return this.gender === 'male' ? 'Nam' : 'Nữ';
+    switch (this.gender) {
+      case 'male':
+        return 'Nam';
+      case 'female':
+        return 'Nữ';
+      case 'empty':
+      default:
+        return '';
+    }
   }
 }
