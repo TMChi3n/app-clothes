@@ -5,6 +5,7 @@ class UpProReq {
   String? gender;
   String? birthday;
 
+<<<<<<< HEAD
   UpProReq({this.username, this.phoneNumber, this.address, this.gender, this.birthday});
 
   Map<String, dynamic> toJson() {
@@ -14,6 +15,22 @@ class UpProReq {
     if (this.address != null) data['address'] = this.address;
     if (this.gender != null) data['gender'] = this.gender;
     if (this.birthday != null) data['birthday'] = this.birthday;
+=======
+  UpProReq(
+      {this.username,
+      this.phoneNumber,
+      this.address,
+      this.gender,
+      this.birthday});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (username != null) data['username'] = username;
+    if (phoneNumber != null) data['phone_number'] = phoneNumber;
+    if (address != null) data['address'] = address;
+    if (gender != null) data['gender'] = gender;
+    if (birthday != null) data['birthday'] = birthday;
+>>>>>>> main
     return data;
   }
 

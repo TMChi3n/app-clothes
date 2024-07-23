@@ -1,5 +1,6 @@
-import 'package:clothes_app/controllers/login.dart';
+import 'package:clothes_app/controller/auth/login.dart';
 import 'package:clothes_app/models/auth/login/login_request.dart';
+import 'package:clothes_app/view/ui/forgotpasspage.dart';
 import 'package:clothes_app/view/ui/mainscreen.dart';
 import 'package:clothes_app/view/ui/registerpage.dart';
 import 'package:clothes_app/view/widgets/appstyle.dart';
@@ -50,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
           padding: EdgeInsets.zero,
           children: [
             ReusableText(
-                text: "Hello!",
+                text: "Đăng nhập!",
                 style: appstyle(33, Colors.black, FontWeight.w600)),
             SizedBox(
               height: 70.h,
@@ -81,8 +82,13 @@ class _LoginPageState extends State<LoginPage> {
                   notifier.isObsecure = !notifier.isObsecure;
                 },
                 child: notifier.isObsecure
+<<<<<<< HEAD
                     ? Icon(Icons.visibility)
                     : Icon(Icons.visibility),
+=======
+                    ? const Icon(Icons.visibility)
+                    : const Icon(Icons.visibility),
+>>>>>>> main
               ),
               validator: (password) {
                 if (password!.isEmpty) {
@@ -102,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
               child: GestureDetector(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Registor()));
+                      MaterialPageRoute(builder: (context) => const Registor()));
                 },
                 child: ReusableText(
                   text: "Chưa có tài khoản ?",
@@ -113,7 +119,9 @@ class _LoginPageState extends State<LoginPage> {
             Align(
               alignment: Alignment.centerRight,
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context,MaterialPageRoute(builder: ((context) =>const ForgotPasswordPage())) );
+                },
                 child: ReusableText(
                   text: "Quên mật khẩu ?",
                   style: appstyle(12, Colors.black, FontWeight.bold),

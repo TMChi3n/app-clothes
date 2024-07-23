@@ -1,6 +1,10 @@
 import 'package:clothes_app/models/auth/login/login_request.dart';
 import 'package:clothes_app/models/auth/signup/signup_data.dart';
+<<<<<<< HEAD:frontend/lib/controllers/login.dart
 import 'package:clothes_app/services/authServices.dart';
+=======
+import 'package:clothes_app/services/user/auth/authServices.dart';
+>>>>>>> main:frontend/lib/controller/auth/login.dart
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

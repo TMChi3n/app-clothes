@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
+<<<<<<< HEAD
 import 'dart:ui';
 import 'package:clothes_app/services/servicesForHome.dart';
 import 'package:clothes_app/view/widgets/home_widget.dart';
@@ -9,6 +10,14 @@ import 'package:clothes_app/view/widgets/appstyle.dart';
 import 'package:flutter/rendering.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/auth/product/products.dart';
+=======
+import 'package:clothes_app/services/servicesForHome.dart';
+import 'package:clothes_app/view/widgets/home_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:clothes_app/view/widgets/appstyle.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../models/product/products.dart';
+>>>>>>> main
 import 'package:clothes_app/view/widgets/customtab.dart';
 
 class HomePage extends StatefulWidget {
@@ -79,7 +88,11 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     debugPrint('<-----------Tại home_sreen người dùng đang sử dụng tên: $username--------->');
     return Scaffold(
+<<<<<<< HEAD
       backgroundColor: const Color(0xEFEEEE),
+=======
+      backgroundColor: const Color(0x00efeeee),
+>>>>>>> main
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: Stack(
@@ -96,7 +109,11 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     Row( children: [
                     if (avatar != null)
                     Padding(
+<<<<<<< HEAD
                       padding: EdgeInsets.only(left: 10),
+=======
+                      padding: const EdgeInsets.only(left: 10),
+>>>>>>> main
                       child: CircleAvatar(
                         radius: 20,
                         backgroundImage: MemoryImage(avatar!),
@@ -117,7 +134,11 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     ),
                     const SizedBox(height: 30),
                     const Text(
+<<<<<<< HEAD
                       'Tùy chọn',
+=======
+                      'Danh mục',
+>>>>>>> main
                       style: TextStyle(fontSize: 23, color: Colors.black,
                       fontStyle: FontStyle.normal,
                       fontWeight: FontWeight.w600),
@@ -169,7 +190,11 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
             Padding(
               padding: EdgeInsets.only(
                 top: MediaQuery.of(context).padding.top +
+<<<<<<< HEAD
                     MediaQuery.of(context).size.height * 0.175,
+=======
+                    MediaQuery.of(context).size.height * 0.180,
+>>>>>>> main
               ),
               child: Container(
                 padding: const EdgeInsets.only(left: 5),

@@ -1,16 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CannotCreateEntityIdMapError, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Order } from './entities/order.entity';
 import { OrderItem } from './order-item/entities/order-item.entity';
 import { CartService } from '../cart/cart.service';
 import { Cart } from '../cart/entities/cart.entity';
-import { CartItem } from '../cart/cart-item/entities/cart-item.entity';
 import { ProductService } from '../product/product.service';
-import { Payment } from '../payment/etities/payment.entity';
+import { Payment } from '../payment/entities/payment.entity';
 import { User } from '../user/entities/user.entity';
 import { UserService } from '../user/user.service';
-
 
 @Injectable()
 export class OrderService {
@@ -38,7 +36,9 @@ export class OrderService {
 
     // Kiểm tra nếu dữ liệu trống
     if (!user || !user.address || !user.phone_number) {
-      throw new Error('User data is incomplete (missing address or phone number)');
+      throw new Error(
+        'User data is incomplete (missing address or phone number)',
+      );
     }
 
     console.log('Creating order with userId:', userId);
@@ -53,7 +53,9 @@ export class OrderService {
     const orderItems: OrderItem[] = [];
     for (const cartItem of cart.cartItems) {
       // Lấy thông tin sản phẩm từ bảng product
-      const product = await this.productService.findProductById(cartItem.id_product);
+      const product = await this.productService.findProductById(
+        cartItem.id_product,
+      );
       if (!product) {
         throw new Error(`Product with id ${cartItem.id_product} not found`);
       }
@@ -71,15 +73,20 @@ export class OrderService {
     // Lưu các mục đơn hàng vào cơ sở dữ liệu
     await this.orderItemRepo.save(orderItems);
 
-     // Tính tổng số tiền của đơn hàng
-     const totalAmount = orderItems.reduce((total, item) => total + item.quantity * item.price, 0);
+    // Tính tổng số tiền của đơn hàng
+    const totalAmount = orderItems.reduce(
+      (total, item) => total + item.quantity * item.price,
+      0,
+    );
 
-     // Tạo và lưu thanh toán cho đơn hàng
-     const payment: Payment = await this.paymentRepo.save({
-       id_order: order.id_order,
-       total_amount: totalAmount,
-       payment_method: paymentMethod, 
-     }); 
+    // Tạo và lưu thanh toán cho đơn hàng
+    const payment: Payment = await this.paymentRepo.save({
+      id_order: order.id_order,
+      total_amount: totalAmount,
+      payment_method: paymentMethod,
+    });
+
+    console.log(payment);
 
     // Xóa giỏ hàng sau khi đã tạo đơn hàng thành công
     await this.cartService.clearCart(userId);
@@ -87,7 +94,7 @@ export class OrderService {
     return order;
   }
   async getOrder(orderId: number) {
-    return this.orderRepo.findOne({ where: {id_order: orderId}});
+    return this.orderRepo.findOne({ where: { id_order: orderId } });
   }
 
   async getOrdersByUser(userId: number) {
@@ -95,17 +102,25 @@ export class OrderService {
   }
 
   async updateOrderStatus(orderId: number, status: string) {
-    const order = await this.orderRepo.findOne({ where: { id_order: orderId } });
+    const order = await this.orderRepo.findOne({
+      where: { id_order: orderId },
+    });
     if (!order) {
       throw new Error('Order not found');
     }
     order.status = status;
     if (status === 'completed' && !order.completed_date) {
       order.completed_date = new Date();
-  
+
       // Tìm thanh toán dựa trên orderId
-      const payment = await this.paymentRepo.findOne({ where: { id_order: orderId } });
-      if (payment && payment.payment_method === 'cash' && !payment.payment_date) {
+      const payment = await this.paymentRepo.findOne({
+        where: { id_order: orderId },
+      });
+      if (
+        payment &&
+        payment.payment_method === 'cash' &&
+        !payment.payment_date
+      ) {
         payment.payment_date = new Date();
         await this.paymentRepo.save(payment);
       }
@@ -114,9 +129,11 @@ export class OrderService {
   }
 
   async deleteOrder(orderId: number) {
-    const order = await this.orderRepo.findOne({ where: { id_order: orderId } });
+    const order = await this.orderRepo.findOne({
+      where: { id_order: orderId },
+    });
     if (order) {
-      await this.orderItemRepo.delete({ id_order: orderId }); 
+      await this.orderItemRepo.delete({ id_order: orderId });
       return this.orderRepo.delete({ id_order: orderId });
     }
     throw new Error('Order not found');
@@ -125,7 +142,7 @@ export class OrderService {
   async calculateTotalAmount(orderId: number): Promise<number> {
     const order = await this.orderRepo.findOne({
       where: { id_order: orderId },
-      relations: ['orderItems'], 
+      relations: ['orderItems'],
     });
 
     if (!order) {
@@ -141,8 +158,14 @@ export class OrderService {
     return totalAmount;
   }
 
-  async getAllOrders(startDate?: Date, endDate?: Date, status?: string): Promise<Order[]> {
-    const queryBuilder = this.orderRepo.createQueryBuilder('order').leftJoinAndSelect('order.orderItems', 'orderItems')
+  async getAllOrders(
+    startDate?: Date,
+    endDate?: Date,
+    status?: string,
+  ): Promise<Order[]> {
+    const queryBuilder = this.orderRepo
+      .createQueryBuilder('order')
+      .leftJoinAndSelect('order.orderItems', 'orderItems');
 
     if (startDate) {
       queryBuilder.andWhere('order.order_date >= :startDate', { startDate });

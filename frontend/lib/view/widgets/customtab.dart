@@ -5,10 +5,17 @@ class CustomTab extends StatelessWidget {
   final bool isSelected;
 
   const CustomTab({
+<<<<<<< HEAD
     Key? key,
     required this.text,
     required this.isSelected,
   }) : super(key: key);
+=======
+    super.key,
+    required this.text,
+    required this.isSelected,
+  });
+>>>>>>> main
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +28,11 @@ class CustomTab extends StatelessWidget {
           width: 2.5,
         ),
       ),
+<<<<<<< HEAD
       padding: EdgeInsets.symmetric(vertical: 4, horizontal: 18.5),
+=======
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 18.5),
+>>>>>>> main
       child: Text(
         text,
         style: TextStyle(

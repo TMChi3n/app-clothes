@@ -8,6 +8,7 @@ import {
   Delete,
   Param,
   Patch,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { CartService } from './cart.service';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
@@ -17,9 +18,9 @@ import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 export class CartController {
   constructor(private cartService: CartService) {}
 
-  @Get('get')
-  async getCart(@Request() req) {
-    return this.cartService.getCart(req.user.userId);
+  @Get('get/:userId')
+  async getCart(@Param('userId') userId: number) {
+    return this.cartService.getCart(userId);
   }
 
   @Post('add')
@@ -49,9 +50,10 @@ export class CartController {
     return { cartItem: updatedCartItem };
   }
 
-  @Delete('clear')
-  async clearCart(@Request() req) {
-    await this.cartService.clearCart(req.user.userId);
-    return { message: 'Cart cleared successfully' };
+  @Delete('clear/:userId')
+  async clearCart(
+    @Param('userId', ParseIntPipe) userId: number,
+  ): Promise<void> {
+    await this.cartService.clearCart(userId);
   }
 }

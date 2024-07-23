@@ -1,6 +1,9 @@
 import 'dart:convert';
 
+<<<<<<< HEAD
 import 'package:flutter/cupertino.dart';
+=======
+>>>>>>> main
 
 class ResultLogin {
   final String accessToken;

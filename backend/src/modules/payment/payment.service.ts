@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Payment } from './etities/payment.entity';
+import { Payment } from './entities/payment.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Order } from '../order/entities/order.entity';
@@ -29,38 +29,54 @@ export class PaymentService {
 // Tạo liên kết thanh toán với PayOS
 async createPaymentLink(requestData: any) {
   try {
+    // Log incoming requestData để debug
+    console.log('Incoming requestData:', requestData);
+
     // Kiểm tra xem order có tồn tại không
-    const order = await this.orderRepository.findOne({where: {id_order: requestData.orderId}});
+    const order = await this.orderRepository.findOne({
+      where: { id_order: requestData.id_order },
+    });
     if (!order) {
-      throw new Error(`Order with id ${requestData.orderId} not found`);
+      throw new Error(`Order with id ${requestData.id_order} not found`);
     }
 
-    const payment = await this.paymentRepository.findOne({ where: { id_order: requestData.orderId } });
+    // Kiểm tra xem payment có tồn tại không
+    const payment = await this.paymentRepository.findOne({
+      where: { id_order: requestData.id_order },
+    });
     if (!payment) {
-      throw new Error(`Payment information for order ${requestData.orderId} not found`);
-    } 
+      throw new Error(`Payment information for order ${requestData.id_order} not found`);
+    }
+
+    // Log thông tin payment để debug
+    console.log('Payment information:', payment);
 
     // Chuyển đổi total_amount thành số và gán vào requestData.amount
     requestData.amount = +payment.total_amount;
+    if (isNaN(requestData.amount)) {
+      throw new Error(`Invalid amount for payment of order ${requestData.id_order}`);
+    }
 
     // Tạo requestData mới chỉ với các thông tin bắt buộc
     const payOSRequestData = {
-      orderCode: requestData.orderId, 
+      orderCode: requestData.id_order,
       amount: requestData.amount,
-      description: requestData.description || `Payment for order #${requestData.orderId}`,
+      description: requestData.description || `Payment for order #${requestData.id_order}`,
       returnUrl: requestData.returnUrl || "https://your-domain.com/payment/success",
       cancelUrl: requestData.cancelUrl || "https://your-domain.com/payment/cancel",
-    };  
+    };
 
-       // Log requestData và payOSRequestData để debug
-       console.log('requestData:', requestData);
-       console.log('payOSRequestData:', payOSRequestData);
+    // Log requestData và payOSRequestData để debug
+    console.log('Updated requestData:', requestData);
+    console.log('Generated payOSRequestData:', payOSRequestData);
 
     // Gọi hàm tạo liên kết thanh toán từ PayOS
     const paymentLinkData = await this.payos.createPaymentLink(payOSRequestData);
+
     // Cập nhật thông tin thanh toán trong cơ sở dữ liệu
     payment.payment_link = paymentLinkData.paymentLinkId;
     await this.paymentRepository.save(payment);
+
     return paymentLinkData;
   } catch (error) {
     throw new Error(`Error creating payment link: ${error.message}`);

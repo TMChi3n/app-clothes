@@ -1,9 +1,6 @@
-import 'dart:convert';
 
-import 'package:clothes_app/models/auth/product/products.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:clothes_app/models/product/products.dart';
 import 'package:flutter/services.dart' as the_bundle;
-import 'package:clothes_app/models/orders/clothes_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:clothes_app/services/config.dart';
 
@@ -20,8 +17,12 @@ class Helper{
 
       final maleList = productFromJson(response.body);
       var profmale = maleList.where((element) => element.person == 'male');
+<<<<<<< HEAD
       // Print to Logcat with tag
       //debugPrint('$logTag: ${profmale.toList()}');
+=======
+
+>>>>>>> main
       return profmale.toList();
     } else {
       throw Exception("Lỗi khi lấy sản phẩm cho male");
@@ -57,35 +58,35 @@ class Helper{
     }
   }
   // For Male by Id_product
-  Future<Products> getProductForMaleById(int id_product) async {
+  Future<Products> getProductForMaleById(int idProduct) async {
     final data =
     await the_bundle.rootBundle.loadString("");
 
     final maleList = productFromJson(data);
 
-    final product = maleList.firstWhere((product) => product.id_product == id_product);
+    final product = maleList.firstWhere((product) => product.id_product == idProduct);
 
     return product;
   }
   // For Female by Id_product
-  Future<Products> getProductForFeMaleById(int id_product) async {
+  Future<Products> getProductForFeMaleById(int idProduct) async {
     final data =
     await the_bundle.rootBundle.loadString("");
 
     final maleList = productFromJson(data);
 
-    final product = maleList.firstWhere((product) => product.id_product == id_product);
+    final product = maleList.firstWhere((product) => product.id_product == idProduct);
 
     return product;
   }
   // For kid by Id_product
-  Future<Products> getProductForKidById(int id_product) async {
+  Future<Products> getProductForKidById(int idProduct) async {
     final data =
     await the_bundle.rootBundle.loadString("");
 
     final maleList = productFromJson(data);
 
-    final product = maleList.firstWhere((product) => product.id_product == id_product);
+    final product = maleList.firstWhere((product) => product.id_product == idProduct);
 
     return product;
   }

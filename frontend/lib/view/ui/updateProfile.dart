@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 import 'package:clothes_app/controllers/user_provider.dart';
 import 'package:clothes_app/models/user/update_profile.dart';
 import 'package:clothes_app/services/userServices.dart';
 import 'package:flutter/cupertino.dart';
+=======
+import 'package:clothes_app/controller/user/user_provider.dart';
+import 'package:clothes_app/models/user/update_profile.dart';
+>>>>>>> main
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:clothes_app/view/widgets/appstyle.dart';
@@ -23,6 +28,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
   TextEditingController avatar = TextEditingController();
   TextEditingController gender = TextEditingController();
   TextEditingController username = TextEditingController();
+<<<<<<< HEAD
   bool isValid = false;
 
   void toConfirm() {
@@ -30,6 +36,15 @@ class _UpdateProfileState extends State<UpdateProfile> {
     if (gender.text.isNotEmpty &&
         gender.text.toLowerCase() != 'male' &&
         gender.text.toLowerCase() != 'female') {
+=======
+
+  bool isValid = false;
+  static const List<String> genderOptions = <String>['Nam','Nữ'];
+  String selectGender = genderOptions.first ;
+  void toConfirm() {
+    isValid = true;
+    if (gender.text.isNotEmpty) {
+>>>>>>> main
       isValid = false;
     }
     if (phoneNumber.text.isNotEmpty && phoneNumber.text.length < 10) {
@@ -49,7 +64,11 @@ class _UpdateProfileState extends State<UpdateProfile> {
       ),
       body: Container(
         child: ListView(
+<<<<<<< HEAD
           padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
+=======
+          padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+>>>>>>> main
           children: [
             ReusableText(
                 text: 'Cập nhật thông tin của bạn',
@@ -76,9 +95,33 @@ class _UpdateProfileState extends State<UpdateProfile> {
             ),
             ReusableText(
                 text: 'Giới tính của bạn',
+<<<<<<< HEAD
                 style: appstyle(15, Colors.black54, FontWeight.w700)),
             CustomTextField(
                 controller: gender, hintText: " Ví dụ : male hoặc female"),
+=======
+                style: appstyle(15, Colors.black54, FontWeight.w700)
+            ),
+            DropdownButtonFormField<String>(
+                value: selectGender,
+                style: const TextStyle(color:Colors.purpleAccent),
+                onChanged: (String? value){
+                  setState(() {
+                    selectGender = value!;
+                  });
+                },
+                items: genderOptions.map<DropdownMenuItem<String>>((String value){
+                  return DropdownMenuItem<String>(
+                    value: value,
+                      child: Text(value)
+                       );
+                }).toList() ,
+
+                icon: const Icon(Icons.arrow_circle_down)
+
+            ),
+
+>>>>>>> main
             const SizedBox(
               height: 20,
             ),
@@ -94,7 +137,11 @@ class _UpdateProfileState extends State<UpdateProfile> {
                 text: 'Bạn muốn đổi tên gọi của mình ?',
                 style: appstyle(15, Colors.black54, FontWeight.w700)),
             CustomTextField(
+<<<<<<< HEAD
                 controller: username, hintText: " Ví dụ : thế anh ngu"),
+=======
+                controller: username, hintText: " Ví dụ : văn vở"),
+>>>>>>> main
             const SizedBox(
               height: 30,
             ),

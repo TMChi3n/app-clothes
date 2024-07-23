@@ -1,11 +1,7 @@
 import 'package:clothes_app/view/widgets/appstyle.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 
-class CustomTextField extends StatelessWidget{
-
-
+class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final bool? obscureText;
   final String hintText;
@@ -14,26 +10,27 @@ class CustomTextField extends StatelessWidget{
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final void Function()? onEditComplete;
+
   const CustomTextField({
-      Key? key,
-      required this.controller,
-      this.obscureText,
-      required this.hintText,
-      this.keyboardType,
-      this.validator,
-      this.prefixIcon,
-      this.suffixIcon,
-      this.onEditComplete}) : super(key:key);
+    super.key,
+    required this.controller,
+    this.obscureText,
+    required this.hintText,
+    this.keyboardType,
+    this.validator,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.onEditComplete,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
         color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(12))
+        borderRadius: BorderRadius.all(Radius.circular(12)),
       ),
       child: TextField(
-
         controller: controller,
         keyboardType: keyboardType,
         obscureText: obscureText ?? false,
@@ -46,15 +43,14 @@ class CustomTextField extends StatelessWidget{
           hintStyle: appstyle(13.5, Colors.grey, FontWeight.w600),
           contentPadding: EdgeInsets.zero,
           border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all((Radius.circular(12))),
+            borderRadius: BorderRadius.all(Radius.circular(12)),
             borderSide: BorderSide(
               color: Colors.green,
-              width: 10
+              width: 10,
             ),
           ),
         ),
       ),
     );
   }
-
 }

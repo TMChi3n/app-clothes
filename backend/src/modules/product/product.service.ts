@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
 import { Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
 @Injectable()
 export class ProductService {
   constructor(
@@ -34,18 +35,20 @@ export class ProductService {
 
   async updateProduct(
     id_product: number,
-    createProductDto: CreateProductDto,
+    updateProductDto: UpdateProductDto,
   ): Promise<Product> {
     const product = await this.findProductById(id_product);
-    const { name, person, material, overview, price, img_url, type } =
-      createProductDto;
-    product.name = name;
-    product.person = person;
-    product.material = material;
-    product.overview = overview;
-    product.price = price;
-    product.img_url = img_url;
-    product.type = type;
+
+    if (!product) {
+      throw new Error('Product not found');
+    }
+
+    for (const [key, value] of Object.entries(updateProductDto)) {
+      if (value !== undefined) {
+        console.log(`Updating ${key} to ${value}`);
+        product[key] = value;
+      }
+    }
 
     return await this.productRepo.save(product);
   }
@@ -62,11 +65,15 @@ export class ProductService {
     type?: string,
     person?: string,
   ): Promise<Product[]> {
-
-    if (priceMin === undefined && priceMax === undefined && type === undefined && person === undefined) {
+    if (
+      priceMin === undefined &&
+      priceMax === undefined &&
+      type === undefined &&
+      person === undefined
+    ) {
       return [];
     }
-    
+
     let filteredProducts = await this.productRepo.find();
 
     if (priceMin !== undefined && priceMax !== undefined) {

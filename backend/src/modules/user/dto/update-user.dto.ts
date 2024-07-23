@@ -16,8 +16,8 @@ export class UpdateUserDto {
   address?: string;
 
   @IsOptional()
-  @IsIn(['male', 'female'])
-  gender?: 'male' | 'female';
+  @IsIn(['Nam', 'Nữ'])
+  gender?: 'Nam' | 'Nữ';
 
   @IsOptional()
   birthday?: Date | string;

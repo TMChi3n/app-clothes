@@ -1,14 +1,11 @@
 import 'package:clothes_app/view/ui/loginpage.dart';
 import 'package:clothes_app/view/widgets/appstyle.dart';
 import 'package:clothes_app/view/widgets/reusable_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class GuestProfile extends StatelessWidget{
-   GuestProfile({super.key});
+   const GuestProfile({super.key});
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -27,7 +24,7 @@ class GuestProfile extends StatelessWidget{
             child: Column(
               children: [
                 Padding(
-                    padding: EdgeInsets.fromLTRB(12, 10, 16, 16),
+                    padding: const EdgeInsets.fromLTRB(12, 10, 16, 16),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,11 +58,11 @@ class GuestProfile extends StatelessWidget{
                       children: [
                         GestureDetector(
                           onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage())
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage())
                             );
                           },
                           child: Container(
-                            margin: EdgeInsets.only(top:7),
+                            margin: const EdgeInsets.only(top:7),
                             width: 120,
                             height: 45,
                             decoration: const BoxDecoration(

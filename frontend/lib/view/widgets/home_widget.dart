@@ -1,10 +1,10 @@
-import 'package:clothes_app/controllers/product.dart';
+import 'package:clothes_app/controller/product.dart';
 import 'package:clothes_app/view/ui/productpage.dart';
 import 'package:clothes_app/view/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
-import '../../models/auth/product/products.dart';
+import '../../models/product/products.dart';
 import 'appstyle.dart';
 import 'newproducts.dart';
 
@@ -22,7 +22,11 @@ class HomeWidget extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
+<<<<<<< HEAD
           height: MediaQuery.of(context).size.height * 0.33,
+=======
+          height: MediaQuery.of(context).size.height * 0.36,
+>>>>>>> main
           child:FutureBuilder<List<Products>>(
             future: _male,
             builder: (context,snapshoot){
@@ -43,21 +47,22 @@ class HomeWidget extends StatelessWidget {
                     final product = snapshoot.data![index];
                     return GestureDetector(
                       onTap:(){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>Productpage(
-                                  id: product.id_product,
-                                  type: product.type)
-                          )
-                      );
-                    },
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>Productpage(
+                                    id: product.id_product,
+                                    type: product.type)
+                            )
+                        );
+                      },
                       child: ProductCard(
                         name: product.name,
                         id_product: product.id_product,
                         type: product.type,
                         price:product.price,
                         imgData: product.imageData,
+                        overview: product.overview,
                       ),
 
                     );
