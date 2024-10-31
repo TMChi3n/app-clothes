@@ -22,7 +22,11 @@ class HomeWidget extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
+<<<<<<< HEAD
+          height: MediaQuery.of(context).size.height * 0.33,
+=======
           height: MediaQuery.of(context).size.height * 0.36,
+>>>>>>> main
           child:FutureBuilder<List<Products>>(
             future: _male,
             builder: (context,snapshoot){

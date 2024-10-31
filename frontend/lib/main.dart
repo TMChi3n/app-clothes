@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+import 'package:clothes_app/controllers/login.dart';
+import 'package:clothes_app/controllers/mainscreen.dart';
+import 'package:clothes_app/controllers/product.dart';
+import 'package:clothes_app/controllers/user_provider.dart';
+import 'package:clothes_app/view/ui/loginpage.dart';
+import 'package:clothes_app/view/ui/mainscreen.dart';
+import 'package:clothes_app/view/ui/updateProfile.dart';
+=======
 import 'package:clothes_app/controller/cart/cart.dart';
 import 'package:clothes_app/controller/search/search.dart';
 import 'package:clothes_app/controller/user/changepassword.dart';
@@ -10,11 +19,22 @@ import 'package:clothes_app/controller/product.dart';
 import 'package:clothes_app/controller/user/user_provider.dart';
 import 'package:clothes_app/view/ui/mainscreen.dart';
 import 'package:clothes_app/view/ui/orderlistpage.dart';
+>>>>>>> main
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+<<<<<<< HEAD
+  runApp(MultiProvider(
+      providers: [
+      ChangeNotifierProvider(create: (context) => MainScreenNotifier()),
+      ChangeNotifierProvider(create: (context) => ProductNotifier()),
+      ChangeNotifierProvider(create: (context) => LoginNotifier()),
+      ChangeNotifierProvider(create: (context)=> UserProvider()),
+  ],
+  child: const MyApp()));
+=======
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => MainScreenNotifier()),
     ChangeNotifierProvider(create: (context) => ProductNotifier()),
@@ -28,6 +48,7 @@ void main() {
     ChangeNotifierProvider(create: (context) => SearchNotifier())
     //ChangeNotifierProvider(create: (context) => OrderNotifier())
   ], child: const MyApp()));
+>>>>>>> main
 }
 
 class MyApp extends StatelessWidget {
@@ -48,12 +69,15 @@ class MyApp extends StatelessWidget {
 
             // sets the homescreen of the app
             home: MainScreen(),
+<<<<<<< HEAD
+=======
             // onGenerateRoute: (settings) {
             //   if (settings.name == '/orders') {
             //     return MaterialPageRoute(builder: (context) => OrderPage());
             //   }
             //   return null;
             // },
+>>>>>>> main
           );
         });
   }

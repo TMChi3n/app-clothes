@@ -224,6 +224,8 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+<<<<<<< HEAD
+=======
   intl:
     dependency: "direct main"
     description:
@@ -232,6 +234,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.19.0"
+>>>>>>> main
   jwt_decoder:
     dependency: "direct main"
     description:

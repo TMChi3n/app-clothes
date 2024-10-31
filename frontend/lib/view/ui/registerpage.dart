@@ -1,5 +1,9 @@
 import 'package:clothes_app/models/auth/signup/signup_data.dart';
 import 'package:clothes_app/view/ui/loginpage.dart';
+<<<<<<< HEAD
+import 'package:flutter/cupertino.dart';
+=======
+>>>>>>> main
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -101,7 +105,11 @@ class _RegistorState extends State<Registor>{
                 onTap:(){
                   notifi.isObsecure = !notifi.isObsecure;
                 },
+<<<<<<< HEAD
+                child:notifi.isObsecure? Icon(Icons.visibility):Icon(Icons.visibility),
+=======
                 child:notifi.isObsecure? const Icon(Icons.visibility):const Icon(Icons.visibility),
+>>>>>>> main
 
               ),
               validator: (password){

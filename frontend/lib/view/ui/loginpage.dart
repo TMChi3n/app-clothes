@@ -82,8 +82,13 @@ class _LoginPageState extends State<LoginPage> {
                   notifier.isObsecure = !notifier.isObsecure;
                 },
                 child: notifier.isObsecure
+<<<<<<< HEAD
+                    ? Icon(Icons.visibility)
+                    : Icon(Icons.visibility),
+=======
                     ? const Icon(Icons.visibility)
                     : const Icon(Icons.visibility),
+>>>>>>> main
               ),
               validator: (password) {
                 if (password!.isEmpty) {

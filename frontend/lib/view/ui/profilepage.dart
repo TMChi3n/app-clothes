@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+import 'package:clothes_app/controllers/login.dart';
+import 'package:clothes_app/view/ui/FavPage.dart';
+import 'package:clothes_app/view/ui/cart_screen.dart';
+import 'package:clothes_app/view/ui/loginpage.dart';
+import 'package:clothes_app/view/ui/unauthenticated/guest_profile.dart';
+import 'package:clothes_app/view/ui/updateProfile.dart';
+import 'package:clothes_app/view/widgets/optionsOnProfilePage.dart';
+=======
 import 'package:clothes_app/controller/auth/login.dart';
 import 'package:clothes_app/controller/user/user_provider.dart';
 import 'package:clothes_app/view/ui/FavPage.dart';
@@ -12,11 +21,15 @@ import 'package:clothes_app/view/ui/updateProfile.dart';
 import 'package:clothes_app/view/widgets/appstyle.dart';
 import 'package:clothes_app/view/widgets/optionsOnProfilePage.dart';
 import 'package:clothes_app/view/widgets/profile_field.dart';
+>>>>>>> main
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
+<<<<<<< HEAD
+=======
 import 'package:shared_preferences/shared_preferences.dart';
+>>>>>>> main
 
 import '../widgets/reusable_text.dart';
 
@@ -28,6 +41,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class ProfilePageState extends State<ProfilePage> {
+<<<<<<< HEAD
+=======
   String username = '......';
   String address = '...';
   String gender = '.';
@@ -46,10 +61,22 @@ class ProfilePageState extends State<ProfilePage> {
       address = shared.getString('address') ?? '';
     });
   }
+>>>>>>> main
 
   @override
   Widget build(BuildContext context) {
     var notifier = Provider.of<LoginNotifier>(context);
+<<<<<<< HEAD
+    return notifier.logged == false? GuestProfile():  Scaffold(
+      backgroundColor: const Color(0xFFE1E1E1) ,
+        appBar: AppBar(
+          backgroundColor: const Color(0xFFE1E1E1),
+          elevation: 0,
+          actions: [
+            GestureDetector(
+              onTap: () {},
+              child: const Row(
+=======
     var usernotifier = Provider.of<UserProvider>(context);
     return notifier.logged == false
         ? const GuestProfile()
@@ -61,6 +88,7 @@ class ProfilePageState extends State<ProfilePage> {
             ),
             body: SingleChildScrollView(
               child: Column(
+>>>>>>> main
                 children: [
                   Container(
                     decoration: const BoxDecoration(
@@ -180,6 +208,93 @@ class ProfilePageState extends State<ProfilePage> {
                                   const SizedBox(
                                     width: 10,
                                   ),
+<<<<<<< HEAD
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                const Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+
+                                  ],
+                                ),
+                                const Spacer(),
+                                    GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(context,
+                                              MaterialPageRoute(builder: (context)  => UpdateProfile()));
+                                        },
+                                        child: Icon(Feather.edit_2)
+                                    )
+
+
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+              ),
+              Column(
+                children: [
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Container(
+                    color: Colors.white,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                            Options(
+                              onTap: () {},
+                                text: 'Đơn hàng',
+                                icon: AntDesign.check,
+                            ),
+                            Options(
+                                onTap: () {
+                                  Navigator.push(
+                                      context, MaterialPageRoute(
+                                    builder: (context) =>const CartPage(),));
+                                  },
+                                text: 'Giỏ hàng',
+                                icon: AntDesign.shoppingcart),
+                            Options(
+                                onTap: () {
+                                  Navigator.push(
+                                      context, MaterialPageRoute(
+                                      builder: (context) =>const FavoPage()));
+                                },
+                                text: 'Yêu thích',
+                                icon: AntDesign.hearto),
+                            Options(
+                                onTap: () {},
+                                text: 'Địa chỉ giao hàng',
+                                icon: SimpleLineIcons.location_pin),
+
+                      ],
+                    )
+                  ),
+                  SizedBox(height: 10),
+
+                  Container(
+                    color:  Colors.white,
+                    child: Column(
+                      children: [
+                    Options(
+                        onTap: () {
+                          notifier.LogOut();
+                          Navigator.push(
+                            context, MaterialPageRoute(builder:
+                          (context) => LoginPage()));
+                        },
+                        text: 'Đăng xuất',
+                        icon: AntDesign.logout),
+                   ]
+                    ),
+                  ),
+=======
                                   ReusableText(
                                       text: 'Tùy chọn',
                                       style: appstyle(
@@ -266,6 +381,7 @@ class ProfilePageState extends State<ProfilePage> {
                       ),
                     ],
                   ),
+>>>>>>> main
                 ],
               ),
             ));

@@ -4,6 +4,10 @@ class Config {
   static const String registerUrl = '/api/v1/auth/register';
   static const String getProductByidProduct = "/api/v1/product/get/:id";
   static const String getAllProduct = '/api/v1/product/get';
+<<<<<<< HEAD
+  static const String updateProfileUser = '/api/v1/auth/update-profile/' ;
+}
+=======
   static const String updateProfileUser = '/api/v1/auth/update-profile/';
   static const String getProfileUser = '/api/v1/auth/profile/';
   static const String getOderByUser = '/api/v1/order/user/';
@@ -14,3 +18,4 @@ class Config {
   static const String clearCart = '';
   static const String addCart = '/api/v1/cart/add';
 }
+>>>>>>> main

@@ -12,10 +12,17 @@ import '../widgets/bottom_navi.dart';
 
 class MainScreen extends StatelessWidget {
   MainScreen({super.key});
+<<<<<<< HEAD
+  List<Widget> pageList =  [
+  const  HomePage(),
+  const FavoPage(),
+  const  SearchPage(),
+=======
   List<Widget> pageList = [
     const HomePage(),
     const FavoPage(),
     const SearchPage(),
+>>>>>>> main
     const CartPage(),
     const ProfilePage(),
     const GuestProfile(),

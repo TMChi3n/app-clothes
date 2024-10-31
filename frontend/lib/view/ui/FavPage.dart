@@ -1,7 +1,14 @@
+<<<<<<< HEAD
+import 'package:clothes_app/controllers/favorite/favorites_notifier.dart';
+import 'package:clothes_app/controllers/login.dart';
+import 'package:flutter/material.dart';
+import 'package:clothes_app/view/widgets/appstyle.dart';
+=======
 import 'package:clothes_app/controller/favorite/favorites_notifier.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+>>>>>>> main
 import 'package:provider/provider.dart';
 
 import '../widgets/favoritescard.dart';
@@ -11,6 +18,10 @@ class FavoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
+    var notifier = Provider.of<LoginNotifier>(context);
+    var favNotifier = Provider.of<FavoritesChangeNotifier>(context);
+=======
     final favoriteNotifier =
     Provider.of<FavoriteNotifier>(context, listen: false);
 
@@ -18,6 +29,7 @@ class FavoPage extends StatelessWidget {
       favoriteNotifier.fetchFavoriteProducts();
     });
 
+>>>>>>> main
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.lightBlue,
